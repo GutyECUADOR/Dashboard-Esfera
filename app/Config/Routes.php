@@ -39,6 +39,10 @@ $routes->group('dashboard', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'HomeController::index');
 });
 
+$routes->group('api', function ($routes) {
+    $routes->resource('ganadores', ['controller' => 'RestGanadorController']);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
