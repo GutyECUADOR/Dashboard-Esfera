@@ -35,7 +35,7 @@
             <?= $this->include('sys_modules/navbarVerticalCollapse')?>
           <!-- Navbar Vertical -->
         </nav>
-        <div class="content">
+        <div class="content" id="app">
           <!-- Navbar Vertical -->
             <?= $this->include('sys_modules/navbar')?>
           <!-- Navbar Vertical -->
@@ -180,7 +180,7 @@
                 <div class="card-header bg-light py-2">
                   <div class="row flex-between-center">
                     <div class="col-auto">
-                      <h6 class="mb-0">Top Products</h6>
+                      <h6 class="mb-0">Canje de Productos</h6>
                     </div>
                     <div class="col-auto d-flex"><a class="btn btn-link btn-sm me-2" href="#!">View Details</a>
                       <div class="dropdown font-sans-serif btn-reveal-trigger">
@@ -195,7 +195,7 @@
                 <div class="card-body h-100">
                   <!-- Find the JS file for the following chart at: src/js/charts/echarts/top-products.js-->
                   <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-                  <div class="echart-bar-top-products h-100" data-echart-responsive="true"></div>
+                  <div id="echar-canjeProductos" class="echart-bar-top-products h-100" data-echart-responsive="true"></div>
                 </div>
               </div>
             </div>
@@ -402,5 +402,9 @@
     <!-- ===============================================-->
 
 
+    <?= $this->section('js')?>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+      <script type="text/javascript" src="assets/js/pages/metricas.js?<?php echo date('Ymd')?>"></script>
+    <?= $this->endSection()?>
            
 <?= $this->endSection()?>

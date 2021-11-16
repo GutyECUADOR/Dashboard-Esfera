@@ -179,6 +179,7 @@
     <script src="vendors/lodash/lodash.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     <script src="vendors/list.js/list.min.js"></script>
+    <script src="assets/js/libs/vue.js"></script>
     <script src="assets/js/theme.js"></script>
     <?= $this->renderSection('js') ?>
   </body>

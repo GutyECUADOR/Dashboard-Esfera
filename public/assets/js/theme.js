@@ -10609,7 +10609,7 @@ var productShareDoughnutInit = function productShareDoughnutInit() {
 
 /* -------------------------------------------------------------------------- */
 
-
+/* 
 docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
 docReady(totalOrderInit);
@@ -10692,4 +10692,4 @@ docReady(linePaymentChartInit);
 docReady(chartBubble);
 docReady(chartLine);
 docReady(treeviewInit);
-//# sourceMappingURL=theme.js.map
+ */
