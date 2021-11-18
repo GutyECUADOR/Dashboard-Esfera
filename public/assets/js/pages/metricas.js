@@ -4,7 +4,7 @@ const app = new Vue({
         title: 'Dashboard',
     },
     methods:{
-        async getPremios() {
+        async getPremiosByPremio() {
            
             const response = await fetch(`./api/ganadores/totalPremiosByPremio`, {
                 })
@@ -13,8 +13,7 @@ const app = new Vue({
                 })
                 .then(response => {
                   return response.map( product => {
-                    console.log(product);
-                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
+                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL), parseInt(product.META)]
                   });
                 }).catch( error => {
                     console.error(error);
@@ -130,48 +129,16 @@ const app = new Vue({
             
            
         },
+        async getPremiosByDia(){
+          
 
-        async getPremiosByPremio(){
-          let barChartElement = document.getElementById('chartjs-bar-chart');
 
-          var getOptions = function getOptions() {
-            return {
-              type: 'bar',
-              data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 6, 3],
-                  backgroundColor: [utils.rgbaColor(utils.getColor('secondary'), 0.2), utils.rgbaColor(utils.getColor('warning'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('success'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('primary'), 0.2)],
-                  borderColor: [utils.getColor('secondary'), utils.getColor('warning'), utils.getColor('info'), utils.getColor('success'), utils.getColor('info'), utils.getColor('primary')],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                plugins: {
-                  tooltip: chartJsDefaultTooltip()
-                },
-                scales: {
-                  x: {
-                    grid: {
-                      color: utils.rgbaColor(utils.getGrays().black, 0.1)
-                    }
-                  },
-                  y: {
-                    grid: {
-                      color: utils.rgbaColor(utils.getGrays().black, 0.1),
-                      drawBorder: true
-                    }
-                  }
-                }
-              }
-            };
-          };
-        }
+        },
         
     },
     mounted(){
-        this.getPremios();
+        this.getPremiosByPremio();
+        this.getPremiosByDia();
     }
  
 })

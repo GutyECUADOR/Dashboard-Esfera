@@ -20,7 +20,8 @@ class RestGanadorController extends ResourceController
         $query = "
         SELECT 
             premios.nombre_corto AS NOMBRE_PREMIO,
-            COUNT(ganadores.id) AS TOTAL
+            COUNT(ganadores.id) AS TOTAL,
+            COUNT(ganadores.id) +1 AS META
         FROM ganadores 
         INNER JOIN premios ON premios.ID = ganadores.premio_id
         WHERE premio_id != 0 AND premio_id IS NOT NULL
