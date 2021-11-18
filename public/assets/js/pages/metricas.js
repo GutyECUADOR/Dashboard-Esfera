@@ -125,6 +125,8 @@ const app = new Vue({
             
            
         },
+
+        async 
         
     },
     mounted(){

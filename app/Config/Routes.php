@@ -40,7 +40,9 @@ $routes->group('dashboard', ['filter' => 'auth'], function ($routes) {
 });
 
 $routes->group('api', function ($routes) {
+    $routes->get('ganadores/totalPremiosByPremio', 'RestGanadorController::totalPremiosByPremio');
     $routes->resource('ganadores', ['controller' => 'RestGanadorController']);
+    
 });
 
 /*
