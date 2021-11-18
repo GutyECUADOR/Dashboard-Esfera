@@ -7,7 +7,7 @@ const app = new Vue({
         },
         grafica2: {
           categorias : [],
-          valores: []
+          serie: []
         }
     },
     methods:{
@@ -153,171 +153,133 @@ const app = new Vue({
             return dia.FECHA_CANJE;
           })
 
+          this.grafica2.serie = serie;
+          this.grafica2.categorias = categorias;
 
-          let ECHART_LINE_TOTAL_SALES = '.echart-line-total-sales';
-          let SELECT_MONTH = '.select-month';
-          let $echartsLineTotalSales = document.querySelector(ECHART_LINE_TOTAL_SALES);
-          let months = ['Jan'];
-
-          if ($echartsLineTotalSales) {
-            // Get options from data attribute
-            let userOptions = utils.getData($echartsLineTotalSales, 'options');
-            let chart = window.echarts.init($echartsLineTotalSales);
-            let monthsnumber = serie;//[100, 80];
-
-            let getDefaultOptions = function getDefaultOptions() {
-              return {
-                color: utils.getGrays()['100'],
-                tooltip: {
-                  trigger: 'axis',
-                  padding: [7, 10],
-                  backgroundColor: utils.getGrays()['100'],
-                  borderColor: utils.getGrays()['300'],
-                  textStyle: {
-                    color: utils.getColors().dark
-                  },
-                  borderWidth: 1,
-                  transitionDuration: 0,
-                  position: function position(pos, params, dom, rect, size) {
-                    return getPosition(pos, params, dom, rect, size);
-                  }
+          let dom = document.querySelector('.echart-line-total-sales');
+         
+          if (dom) {
+            let chart = echarts.init(dom);
+           
+            let option = {
+              color: utils.getGrays()['100'],
+              tooltip: {
+                trigger: 'axis',
+                padding: [7, 10],
+                backgroundColor: utils.getGrays()['100'],
+                borderColor: utils.getGrays()['300'],
+                textStyle: {
+                  color: utils.getColors().dark
                 },
-                xAxis: {
-                  type: 'category',
-                  data: categorias,
-                  boundaryGap: false,
-                  axisPointer: {
-                    lineStyle: {
-                      color: utils.getGrays()['300'],
-                      type: 'dashed'
-                    }
-                  },
-                  splitLine: {
-                    show: false
-                  },
-                  axisLine: {
-                    lineStyle: {
-                      // color: utils.getGrays()['300'],
-                      color: utils.rgbaColor('#000', 0.01),
-                      type: 'dashed'
-                    }
-                  },
-                  axisTick: {
-                    show: false
-                  },
-                  axisLabel: {
-                    color: utils.getGrays()['400'],
-                    formatter: function formatter(value) {
-                      moment.locale("es")
-                      let date = moment(value).format('dddd-DD');
-                      return date;
-                    },
-                    margin: 15
-                  }
-                },
-                yAxis: {
-                  type: 'value',
-                  axisPointer: {
-                    show: false
-                  },
-                  splitLine: {
-                    lineStyle: {
-                      color: utils.getGrays()['300'],
-                      type: 'dashed'
-                    }
-                  },
-                  boundaryGap: false,
-                  axisLabel: {
-                    show: true,
-                    color: utils.getGrays()['400'],
-                    margin: 15
-                  },
-                  axisTick: {
-                    show: false
-                  },
-                  axisLine: {
-                    show: false
-                  }
-                },
-                series: [{
-                  type: 'line',
-                  data: monthsnumber,
-                  lineStyle: {
-                    color: utils.getColors().primary
-                  },
-                  itemStyle: {
-                    borderColor: utils.getColors().primary,
-                    borderWidth: 2
-                  },
-                  symbol: 'circle',
-                  symbolSize: 10,
-                  smooth: false,
-                  hoverAnimation: true,
-                  areaStyle: {
-                    color: {
-                      type: 'linear',
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [{
-                        offset: 0,
-                        color: utils.rgbaColor(utils.getColors().primary, 0.2)
-                      }, {
-                        offset: 1,
-                        color: utils.rgbaColor(utils.getColors().primary, 0)
-                      }]
-                    }
-                  }
-                }],
-                grid: {
-                  right: '28px',
-                  left: '40px',
-                  bottom: '15%',
-                  top: '5%'
+                borderWidth: 1,
+                transitionDuration: 0,
+                position: function position(pos, params, dom, rect, size) {
+                  return getPosition(pos, params, dom, rect, size);
                 }
-              };
+              },
+              xAxis: {
+                type: 'category',
+                data: this.grafica2.categorias,
+                boundaryGap: false,
+                axisPointer: {
+                  lineStyle: {
+                    color: utils.getGrays()['300'],
+                    type: 'dashed'
+                  }
+                },
+                splitLine: {
+                  show: false
+                },
+                axisLine: {
+                  lineStyle: {
+                    // color: utils.getGrays()['300'],
+                    color: utils.rgbaColor('#000', 0.01),
+                    type: 'dashed'
+                  }
+                },
+                axisTick: {
+                  show: false
+                },
+                axisLabel: {
+                  color: utils.getGrays()['400'],
+                  formatter: function formatter(value) {
+                    moment.locale("es")
+                    let date = moment(value).format('dddd-DD');
+                    return date;
+                  },
+                  margin: 15
+                }
+              },
+              yAxis: {
+                type: 'value',
+                axisPointer: {
+                  show: false
+                },
+                splitLine: {
+                  lineStyle: {
+                    color: utils.getGrays()['300'],
+                    type: 'dashed'
+                  }
+                },
+                boundaryGap: false,
+                axisLabel: {
+                  show: true,
+                  color: utils.getGrays()['400'],
+                  margin: 15
+                },
+                axisTick: {
+                  show: false
+                },
+                axisLine: {
+                  show: false
+                }
+              },
+              series: [{
+                type: 'line',
+                data: this.grafica2.serie,
+                lineStyle: {
+                  color: utils.getColors().primary
+                },
+                itemStyle: {
+                  borderColor: utils.getColors().primary,
+                  borderWidth: 2
+                },
+                symbol: 'circle',
+                symbolSize: 10,
+                smooth: false,
+                hoverAnimation: true,
+                areaStyle: {
+                  color: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
+                    colorStops: [{
+                      offset: 0,
+                      color: utils.rgbaColor(utils.getColors().primary, 0.2)
+                    }, {
+                      offset: 1,
+                      color: utils.rgbaColor(utils.getColors().primary, 0)
+                    }]
+                  }
+                }
+              }],
+              grid: {
+                right: '28px',
+                left: '40px',
+                bottom: '15%',
+                top: '5%'
+              }
             };
 
-            echartSetOption(chart, userOptions, getDefaultOptions); // Change chart options accordiong to the selected month
-
-            let monthSelect = document.querySelector(SELECT_MONTH);
-
-            if (monthSelect) {
-              monthSelect.addEventListener('change', function (e) {
-                let month = e.currentTarget.value;
-                let data = monthsnumber;
-                chart.setOption({
-                  tooltip: {
-                    trigger: 'axis',
-                    padding: [7, 10],
-                    backgroundColor: utils.getGrays()['100'],
-                    borderColor: utils.getGrays()['300'],
-                    textStyle: {
-                      color: utils.getColors().dark
-                    },
-                    borderWidth: 1,
-                    transitionDuration: 0,
-                    position: function position(pos, params, dom, rect, size) {
-                      return getPosition(pos, params, dom, rect, size);
-                    }
-                  },
-                  xAxis: {
-                    axisLabel: {
-                      formatter: function formatter(value) {
-                        moment.lang("es")
-                        let date = moment(value).format('dddd-DD');
-                        return date;
-                      },
-                      margin: 15
-                    }
-                  },
-                  series: [{
-                    data: data
-                  }]
-                });
-              });
+            if (option && typeof option === 'object') {
+              chart.setOption(option);
             }
+
+          
+
+           
           }
 
 
