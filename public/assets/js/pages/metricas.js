@@ -2,6 +2,13 @@ const app = new Vue({
     el: '#app',
     data: {
         title: 'Dashboard',
+        grafica1: {
+          valores : []
+        },
+        grafica2: {
+          categorias : [],
+          valores: []
+        }
     },
     methods:{
         async getPremiosByPremio() {
@@ -13,21 +20,19 @@ const app = new Vue({
                 })
                 .then(response => {
                   return response.map( product => {
-                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL), parseInt(product.META)]
+                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
                   });
                 }).catch( error => {
                     console.error(error);
                 }); 
 
-            console.log(response);
-           
-          
+            this.grafica1.valores = response;
+
             let data_example = [
                 ['TV', 110], 
                 ['Betplay', 83], 
             ];
             
-            console.log(data_example);
 
             let dom = document.getElementById("echar-canjeProductos");
             let myChart = echarts.init(dom);
@@ -35,7 +40,7 @@ const app = new Vue({
             let option = {
                 color: [utils.getColors().primary, utils.getGrays()['800']],
                 dataset: {
-                  source: response
+                  source: this.grafica1.valores
                 },
                 tooltip: {
                   trigger: 'item',
@@ -130,7 +135,190 @@ const app = new Vue({
            
         },
         async getPremiosByDia(){
-          
+
+          const response = await fetch(`./api/premios/totalPremiosByDia`, {
+          })
+          .then(response => {
+              return response.json();
+          })
+          .catch( error => {
+              console.error(error);
+          }); 
+
+          let serie = response.map( dia => {
+            return parseInt(dia.TOTAL);
+          })
+
+          let categorias = response.map( dia => {
+            return dia.FECHA_CANJE;
+          })
+
+
+          let ECHART_LINE_TOTAL_SALES = '.echart-line-total-sales';
+          let SELECT_MONTH = '.select-month';
+          let $echartsLineTotalSales = document.querySelector(ECHART_LINE_TOTAL_SALES);
+          let months = ['Jan'];
+
+          if ($echartsLineTotalSales) {
+            // Get options from data attribute
+            let userOptions = utils.getData($echartsLineTotalSales, 'options');
+            let chart = window.echarts.init($echartsLineTotalSales);
+            let monthsnumber = serie;//[100, 80];
+
+            let getDefaultOptions = function getDefaultOptions() {
+              return {
+                color: utils.getGrays()['100'],
+                tooltip: {
+                  trigger: 'axis',
+                  padding: [7, 10],
+                  backgroundColor: utils.getGrays()['100'],
+                  borderColor: utils.getGrays()['300'],
+                  textStyle: {
+                    color: utils.getColors().dark
+                  },
+                  borderWidth: 1,
+                  transitionDuration: 0,
+                  position: function position(pos, params, dom, rect, size) {
+                    return getPosition(pos, params, dom, rect, size);
+                  }
+                },
+                xAxis: {
+                  type: 'category',
+                  data: categorias,
+                  boundaryGap: false,
+                  axisPointer: {
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'dashed'
+                    }
+                  },
+                  splitLine: {
+                    show: false
+                  },
+                  axisLine: {
+                    lineStyle: {
+                      // color: utils.getGrays()['300'],
+                      color: utils.rgbaColor('#000', 0.01),
+                      type: 'dashed'
+                    }
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  axisLabel: {
+                    color: utils.getGrays()['400'],
+                    formatter: function formatter(value) {
+                      moment.locale("es")
+                      let date = moment(value).format('dddd-DD');
+                      return date;
+                    },
+                    margin: 15
+                  }
+                },
+                yAxis: {
+                  type: 'value',
+                  axisPointer: {
+                    show: false
+                  },
+                  splitLine: {
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'dashed'
+                    }
+                  },
+                  boundaryGap: false,
+                  axisLabel: {
+                    show: true,
+                    color: utils.getGrays()['400'],
+                    margin: 15
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  axisLine: {
+                    show: false
+                  }
+                },
+                series: [{
+                  type: 'line',
+                  data: monthsnumber,
+                  lineStyle: {
+                    color: utils.getColors().primary
+                  },
+                  itemStyle: {
+                    borderColor: utils.getColors().primary,
+                    borderWidth: 2
+                  },
+                  symbol: 'circle',
+                  symbolSize: 10,
+                  smooth: false,
+                  hoverAnimation: true,
+                  areaStyle: {
+                    color: {
+                      type: 'linear',
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                        offset: 0,
+                        color: utils.rgbaColor(utils.getColors().primary, 0.2)
+                      }, {
+                        offset: 1,
+                        color: utils.rgbaColor(utils.getColors().primary, 0)
+                      }]
+                    }
+                  }
+                }],
+                grid: {
+                  right: '28px',
+                  left: '40px',
+                  bottom: '15%',
+                  top: '5%'
+                }
+              };
+            };
+
+            echartSetOption(chart, userOptions, getDefaultOptions); // Change chart options accordiong to the selected month
+
+            let monthSelect = document.querySelector(SELECT_MONTH);
+
+            if (monthSelect) {
+              monthSelect.addEventListener('change', function (e) {
+                let month = e.currentTarget.value;
+                let data = monthsnumber;
+                chart.setOption({
+                  tooltip: {
+                    trigger: 'axis',
+                    padding: [7, 10],
+                    backgroundColor: utils.getGrays()['100'],
+                    borderColor: utils.getGrays()['300'],
+                    textStyle: {
+                      color: utils.getColors().dark
+                    },
+                    borderWidth: 1,
+                    transitionDuration: 0,
+                    position: function position(pos, params, dom, rect, size) {
+                      return getPosition(pos, params, dom, rect, size);
+                    }
+                  },
+                  xAxis: {
+                    axisLabel: {
+                      formatter: function formatter(value) {
+                        moment.lang("es")
+                        let date = moment(value).format('dddd-DD');
+                        return date;
+                      },
+                      margin: 15
+                    }
+                  },
+                  series: [{
+                    data: data
+                  }]
+                });
+              });
+            }
+          }
 
 
         },

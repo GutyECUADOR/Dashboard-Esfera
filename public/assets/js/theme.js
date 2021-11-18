@@ -9478,7 +9478,7 @@ var totalSalesEcommerce = function totalSalesEcommerce() {
 /* -------------------------------------------------------------------------- */
 
 
-var totalSalesInit = function totalSalesInit() {
+/* var totalSalesInit = function totalSalesInit() {
   var ECHART_LINE_TOTAL_SALES = '.echart-line-total-sales';
   var SELECT_MONTH = '.select-month';
   var $echartsLineTotalSales = document.querySelector(ECHART_LINE_TOTAL_SALES);
@@ -9648,7 +9648,7 @@ var totalSalesInit = function totalSalesInit() {
       });
     }
   }
-};
+}; */
 /* -------------------------------------------------------------------------- */
 
 /*                                Traffic Channels                           */
@@ -10615,7 +10615,7 @@ docReady(handleNavbarVerticalCollapsed);
 docReady(totalOrderInit);
 docReady(weeklySalesInit);
 docReady(marketShareInit);
-docReady(totalSalesInit);
+/* docReady(totalSalesInit); */
 /* docReady(topProductsInit); */
 docReady(navbarTopDropShadow);
 docReady(tooltipInit);
