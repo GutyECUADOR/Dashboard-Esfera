@@ -168,13 +168,14 @@
                     <div class="col-auto">
                       <h6 class="mb-0">Premios canjeados por dia</h6>
                     </div>
-                    <div class="col-auto d-flex">
-                      <input type="date" id="select-month" class="form-control form-control-sm me-2">
-                      <input type="date" class="form-control form-control-sm">
+                    <div class="col-auto d-flex w-100">
+                      <input type="date" v-model="grafica2.fechaINI" @change="getPremiosByDia" class="form-control form-control-sm me-2">
+                      <input type="date" v-model="grafica2.fechaFIN" @change="getPremiosByDia" class="form-control form-control-sm">
                      
                       <div class="dropdown font-sans-serif btn-reveal-trigger">
                         <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
                         <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
+                          <a class="dropdown-item" @click="getPremiosByDia">Recargar</a>
                           <a class="dropdown-item" href="#!">Exportar Informe</a>
                         </div>
                       </div>

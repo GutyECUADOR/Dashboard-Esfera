@@ -41,7 +41,7 @@ $routes->group('dashboard', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('api', function ($routes) {
     $routes->get('ganadores/totalPremiosByPremio', 'RestGanadorController::totalPremiosByPremio');
-    $routes->get('premios/totalPremiosByDia', 'RestPremioController::totalPremiosByDia');
+    $routes->get('premios/totalPremiosByDia/(:any)/(:any)', 'RestPremioController::totalPremiosByDia/$1/$2');
     $routes->resource('ganadores', ['controller' => 'RestGanadorController']);
     
 });

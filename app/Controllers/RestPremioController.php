@@ -14,7 +14,7 @@ class RestPremioController extends ResourceController
         return $this->respond($this->model->findAll());
     }
 
-    public function totalPremiosByDia(){
+    public function totalPremiosByDia($fechaINI, $fechaFIN){
 
         $db = \Config\Database::connect();
         $query = "
@@ -24,13 +24,14 @@ class RestPremioController extends ResourceController
         FROM ganadores 
         INNER JOIN premios ON premios.ID = ganadores.premio_id
         WHERE premio_id != 0 AND premio_id IS NOT NULL
-        AND DATE_FORMAT(ganadores.fecha, '%Y-%m-%d') BETWEEN '2021-11-11' AND '2021-11-12'
+        AND DATE_FORMAT(ganadores.fecha, '%Y-%m-%d') BETWEEN '$fechaINI' AND '$fechaFIN'
         GROUP BY 
             DATE_FORMAT(ganadores.fecha, '%Y-%m-%d')
         
         ";
         $query= $db->query($query);
-        $response = $query->getResultArray();
+        $resultset = $query->getResultArray(); 
+        $response = array('status' => 'OK', 'message' => 'Respuesta Correcta', 'premios' => $resultset);
 
         return $this->respond($response);
     }

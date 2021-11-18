@@ -6,6 +6,8 @@ const app = new Vue({
           valores : []
         },
         grafica2: {
+          fechaINI : moment().format("YYYY-MM-01"),
+          fechaFIN : moment().format("YYYY-MM-30"),
           categorias : [],
           serie: []
         }
@@ -136,7 +138,7 @@ const app = new Vue({
         },
         async getPremiosByDia(){
 
-          const response = await fetch(`./api/premios/totalPremiosByDia`, {
+          const response = await fetch(`./api/premios/totalPremiosByDia/${this.grafica2.fechaINI}/${this.grafica2.fechaFIN}`, {
           })
           .then(response => {
               return response.json();
@@ -145,11 +147,11 @@ const app = new Vue({
               console.error(error);
           }); 
 
-          let serie = response.map( dia => {
+          let serie = response.premios.map( dia => {
             return parseInt(dia.TOTAL);
           })
 
-          let categorias = response.map( dia => {
+          let categorias = response.premios.map( dia => {
             return dia.FECHA_CANJE;
           })
 
@@ -204,7 +206,7 @@ const app = new Vue({
                   color: utils.getGrays()['400'],
                   formatter: function formatter(value) {
                     moment.locale("es")
-                    let date = moment(value).format('dddd-DD');
+                    let date = moment(value).format('dddd DD');
                     return date;
                   },
                   margin: 15
