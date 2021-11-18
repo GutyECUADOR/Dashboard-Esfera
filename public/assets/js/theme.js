@@ -9045,7 +9045,7 @@ var sessionByCountryChartInit = function sessionByCountryChartInit() {
 /* -------------------------------------------------------------------------- */
 
 
-var topProductsInit = function topProductsInit() {
+/* var topProductsInit = function topProductsInit() {
   var ECHART_BAR_TOP_PRODUCTS = '.echart-bar-top-products';
   var $echartBarTopProducts = document.querySelector(ECHART_BAR_TOP_PRODUCTS);
 
@@ -9164,7 +9164,7 @@ var topProductsInit = function topProductsInit() {
 
     echartSetOption(chart, userOptions, getDefaultOptions);
   }
-};
+}; */
 /* -------------------------------------------------------------------------- */
 
 /*                                Total Order                                 */
@@ -10616,7 +10616,7 @@ docReady(totalOrderInit);
 docReady(weeklySalesInit);
 docReady(marketShareInit);
 docReady(totalSalesInit);
-docReady(topProductsInit);
+/* docReady(topProductsInit); */
 docReady(navbarTopDropShadow);
 docReady(tooltipInit);
 docReady(popoverInit);

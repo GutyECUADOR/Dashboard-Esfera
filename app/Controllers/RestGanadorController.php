@@ -19,13 +19,13 @@ class RestGanadorController extends ResourceController
         $db = \Config\Database::connect();
         $query = "
         SELECT 
-            COUNT(ganadores.id) AS TOTAL,
-            premios.nombre_premio AS PREMIO
+            premios.nombre_corto AS NOMBRE_PREMIO,
+            COUNT(ganadores.id) AS TOTAL
         FROM ganadores 
         INNER JOIN premios ON premios.ID = ganadores.premio_id
         WHERE premio_id != 0 AND premio_id IS NOT NULL
         GROUP BY 
-            premios.nombre_premio
+            premios.nombre_corto
         
         ";
         $query= $db->query($query);

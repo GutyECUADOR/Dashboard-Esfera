@@ -6,32 +6,37 @@ const app = new Vue({
     methods:{
         async getPremios() {
            
-            const response = await fetch(`./api/ganadores`, {
+            const response = await fetch(`./api/ganadores/totalPremiosByPremio`, {
                 })
                 .then(response => {
                     return response.json();
+                })
+                .then(response => {
+                  return response.map( product => {
+                    console.log(product);
+                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
+                  });
                 }).catch( error => {
                     console.error(error);
                 }); 
 
             console.log(response);
+           
           
-            let data = [
-                ['product', '2020'], 
-                ['Boots4', 43], 
-                ['Reign Pro', 83], 
-                ['Slick', 86], 
-                ['Falcon', 72], 
-                ['Sparrow', 80],
-                ['Hideway', 50], 
-                ['Freya', 80]];
+            let data_example = [
+                ['TV', 110], 
+                ['Betplay', 83], 
+            ];
+            
+            console.log(data_example);
+
             let dom = document.getElementById("echar-canjeProductos");
             let myChart = echarts.init(dom);
             
             let option = {
                 color: [utils.getColors().primary, utils.getGrays()['800']],
                 dataset: {
-                  source: data
+                  source: response
                 },
                 tooltip: {
                   trigger: 'item',
@@ -47,11 +52,11 @@ const app = new Vue({
                     return getPosition(pos, params, dom, rect, size);
                   },
                   formatter: function formatter(params) {
-                    return "<div class=\"font-weight-semi-bold\">".concat(params.seriesName, "</div><div class=\"fs--1 text-600\"><strong>").concat(params.name, ":</strong> ").concat(params.value[params.componentIndex + 1], "</div>");
+                    return "<div class=\"font-weight-semi-bold\">".concat('Producto', "</div><div class=\"fs--1 text-600\"><strong>").concat(params.name, ":</strong> ").concat(params.value[params.componentIndex + 1], "</div>");
                   }
                 },
                 legend: {
-                  data: ['2020', '2018'],
+                  data: [],
                   left: 'center',
                   itemWidth: 10,
                   itemHeight: 10,
@@ -126,11 +131,47 @@ const app = new Vue({
            
         },
 
-        async 
+        async getPremiosByPremio(){
+          let barChartElement = document.getElementById('chartjs-bar-chart');
+
+          var getOptions = function getOptions() {
+            return {
+              type: 'bar',
+              data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                  label: '# of Votes',
+                  data: [12, 19, 3, 5, 6, 3],
+                  backgroundColor: [utils.rgbaColor(utils.getColor('secondary'), 0.2), utils.rgbaColor(utils.getColor('warning'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('success'), 0.2), utils.rgbaColor(utils.getColor('info'), 0.2), utils.rgbaColor(utils.getColor('primary'), 0.2)],
+                  borderColor: [utils.getColor('secondary'), utils.getColor('warning'), utils.getColor('info'), utils.getColor('success'), utils.getColor('info'), utils.getColor('primary')],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                plugins: {
+                  tooltip: chartJsDefaultTooltip()
+                },
+                scales: {
+                  x: {
+                    grid: {
+                      color: utils.rgbaColor(utils.getGrays().black, 0.1)
+                    }
+                  },
+                  y: {
+                    grid: {
+                      color: utils.rgbaColor(utils.getGrays().black, 0.1),
+                      drawBorder: true
+                    }
+                  }
+                }
+              }
+            };
+          };
+        }
         
     },
     mounted(){
-        //this.getPremios();
+        this.getPremios();
     }
  
 })
