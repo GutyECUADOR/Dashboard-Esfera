@@ -9050,7 +9050,7 @@ var topProductsInit = function topProductsInit() {
   var $echartBarTopProducts = document.querySelector(ECHART_BAR_TOP_PRODUCTS);
 
   if ($echartBarTopProducts) {
-    var data = [['product', '2019', '2018'], ['Boots4', 43, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
+    var data = [['product', '2019', '2018'], ['Boots4', 80, 85], ['Reign Pro', 83, 73], ['Slick', 86, 62], ['Falcon', 72, 53], ['Sparrow', 80, 50], ['Hideway', 50, 70], ['Freya', 80, 90]];
     var userOptions = utils.getData($echartBarTopProducts, 'options');
     var chart = window.echarts.init($echartBarTopProducts);
 
@@ -10609,7 +10609,7 @@ var productShareDoughnutInit = function productShareDoughnutInit() {
 
 /* -------------------------------------------------------------------------- */
 
-/* 
+
 docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
 docReady(totalOrderInit);
@@ -10692,4 +10692,4 @@ docReady(linePaymentChartInit);
 docReady(chartBubble);
 docReady(chartLine);
 docReady(treeviewInit);
- */
+//# sourceMappingURL=theme.js.map

@@ -128,7 +128,7 @@ const app = new Vue({
         
     },
     mounted(){
-        this.getPremios();
+        //this.getPremios();
     }
  
 })
