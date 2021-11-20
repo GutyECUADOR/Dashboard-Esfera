@@ -14,6 +14,8 @@ class RestGanadorController extends ResourceController
         return $this->respond($this->model->findAll());
     }
 
+   
+
     public function totalPremiosByPremio(){
 
         $db = \Config\Database::connect();

@@ -2,6 +2,7 @@ const app = new Vue({
     el: '#app',
     data: {
         title: 'Dashboard',
+        totalPremiosEntregados: 0,
         grafica1: {
           valores : []
         },
@@ -13,6 +14,19 @@ const app = new Vue({
         }
     },
     methods:{
+        async getReconteo() {
+          const response = await fetch(`./api/premios/getRecuento`, {
+                            })
+                            .then(response => {
+                                return response.json();
+                            })
+                            .catch( error => {
+                                console.error(error);
+                            }); 
+          console.log(response);
+          this.totalPremiosEntregados = response.totalPremiosEntregados.total;
+          
+        },
         async getPremiosByPremio() {
            
             const response = await fetch(`./api/ganadores/totalPremiosByPremio`, {
@@ -291,6 +305,7 @@ const app = new Vue({
     mounted(){
         this.getPremiosByPremio();
         this.getPremiosByDia();
+        this.getReconteo();
     }
  
 })

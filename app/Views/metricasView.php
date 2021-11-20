@@ -48,7 +48,7 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row">
                     <div class="col">
-                      <p class="font-sans-serif lh-1 mb-1 fs-4">47</p><span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
+                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPremiosEntregados }}</p><span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
                     </div>
                     <div class="col-auto ps-0">
                       <div class="echart-bar-weekly-sales h-100"></div>

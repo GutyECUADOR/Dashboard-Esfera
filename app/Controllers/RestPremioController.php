@@ -14,6 +14,21 @@ class RestPremioController extends ResourceController
         return $this->respond($this->model->findAll());
     }
 
+    public function getRecuento(){
+        $db = \Config\Database::connect();
+       
+        $query = "
+            SELECT COUNT(*) as total FROM ganadores WHERE premio_id != 0 AND DNI != ''
+        ";
+        $query= $db->query($query);
+        $totalPremiosEntregados = $query->getRow();    
+        
+        $response = array(
+            'totalPremiosEntregados' => $totalPremiosEntregados);
+        
+        return $this->respond($response);
+    }
+
     public function totalPremiosByDia($fechaINI, $fechaFIN){
 
         $db = \Config\Database::connect();
