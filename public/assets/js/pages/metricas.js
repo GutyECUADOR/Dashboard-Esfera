@@ -15,8 +15,8 @@ const app = new Vue({
           serie: []
         },
         grafica3: {
-          fechaINI : moment().format("YYYY-MM-01"),
-          fechaFIN : moment().format("YYYY-MM-30")
+          fechaINI : moment().format("YYYY-MM-19"),
+          fechaFIN : moment().format("YYYY-MM-DD")
         }
     },
     methods:{
@@ -302,18 +302,16 @@ const app = new Vue({
         async grafica3_premiosEntregadosByFecha(){
 
           //Consulta de datos a la DB
-          const response = await fetch(`./api/premios/premiosEntregadosByFecha/${this.grafica1.fechaINI}/${this.grafica1.fechaFIN}`, {
+          const response = await fetch(`./api/premios/premiosEntregadosByFecha/${this.grafica3.fechaINI}/${this.grafica3.fechaFIN}`, {
           })
           .then(response => {
               return response.json();
           })
-          .then(response => {
-            return response.map( product => {
-              return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
-            });
-          }).catch( error => {
+          .catch( error => {
               console.error(error);
           }); 
+
+          console.log(response);
 
           let $barTimelineChartEl = document.querySelector('.echart-bar-timeline-chart-example');
 
@@ -321,14 +319,17 @@ const app = new Vue({
             // Get options from data attribute
             let userOptions = utils.getData($barTimelineChartEl, 'options');
             let chart = window.echarts.init($barTimelineChartEl);
-            let months = ['1','2','3','4','5'];
+            let startDate = moment(this.grafica3.fechaINI);
+            let endDate = moment(this.grafica3.fechaFIN);
+            let dateList = this.getDaysBetweenDates(startDate, endDate);
+            let serie_dias = dateList; 
             let dataMap = {};
 
             let dataFormatter = function dataFormatter(obj) {
               return Object.keys(obj).reduce(function (acc, val) {
                 return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, val, obj[val].map(function (value, index) {
                   return {
-                    name: months[index],
+                    name: serie_dias[index],
                     value: value
                   };
                 })));
@@ -336,67 +337,37 @@ const app = new Vue({
             };
 
             dataMap.motos = dataFormatter({
-              noviembre: [300.68, 112.38, 1400, 262.42],
-              diciembre: [88.8, 103.35, 1461.81, 276.77, 634.94, 939.43, 672.76, 750.14, 93.81, 1545.05, 925.1, 1011.03],
-              enero: [101.26, 110.19, 1804.72, 311.97, 762.1, 1133.42, 783.8, 915.38, 101.84, 1816.31, 986.02, 1200.18],
-              febrero: [112.83, 122.58, 2034.59, 313.58, 907.95, 1302.02, 916.72, 1088.94, 111.8, 2100.11, 1095.96, 1418.09]
+              noviembre: [300.68, 112.38, 1400, 262.42]
             
             });
             dataMap.tvs = dataFormatter({
-              noviembre: [2026.51, 2135.07, 5271.57, 2357.04],
-              diciembre: [2191.43, 2457.08, 6110.43, 2755.66, 2374.96, 4566.83, 1915.29, 3365.31, 4969.95, 12282.89, 8511.51, 2711.18],
-              enero: [2509.4, 2892.53, 7201.88, 3454.49, 3193.67, 5544.14, 2475.45, 3695.58, 5571.06, 14471.26, 10154.25, 3370.96],
-              febrero: [2626.41, 3709.78, 8701.34, 4242.36, 4376.19, 7158.84, 3097.12, 4319.75, 6085.84, 16993.34, 11567.42, 4198.93]
-              
+              noviembre: [2026.51, 2135.07, 5271.57, 2357.04]
             });
             dataMap.celulares = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
-              diciembre: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
-              enero: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
-              febrero: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
-             
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
             });
 
             dataMap.bicicletas = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
-              diciembre: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
-              enero: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
-              febrero: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
-             
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
             });
 
             dataMap.bonos = dataFormatter({
-              noviembre: [88.68, 112.38, 1400, 262.42],
-              diciembre: [88.8, 103.35, 1461.81, 276.77, 634.94, 939.43, 672.76, 750.14, 93.81, 1545.05, 925.1, 1011.03],
-              enero: [101.26, 110.19, 1804.72, 311.97, 762.1, 1133.42, 783.8, 915.38, 101.84, 1816.31, 986.02, 1200.18],
-              febrero: [112.83, 122.58, 2034.59, 313.58, 907.95, 1302.02, 916.72, 1088.94, 111.8, 2100.11, 1095.96, 1418.09]
-            
+              noviembre: [88.68, 112.38, 1400, 262.42]
             });
             dataMap.amazon = dataFormatter({
-              noviembre: [2026.51, 2135.07, 5271.57, 2357.04],
-              diciembre: [2191.43, 2457.08, 6110.43, 2755.66, 2374.96, 4566.83, 1915.29, 3365.31, 4969.95, 12282.89, 8511.51, 2711.18],
-              enero: [2509.4, 2892.53, 7201.88, 3454.49, 3193.67, 5544.14, 2475.45, 3695.58, 5571.06, 14471.26, 10154.25, 3370.96],
-              febrero: [2626.41, 3709.78, 8701.34, 4242.36, 4376.19, 7158.84, 3097.12, 4319.75, 6085.84, 16993.34, 11567.42, 4198.93]
-              
+              noviembre: [2026.51, 2135.07, 5271.57, 2357.04]
             });
             dataMap.recargas = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
-              diciembre: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
-              enero: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
-              febrero: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
-             
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
             });
 
             dataMap.betplay = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
-              diciembre: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
-              enero: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
-              febrero: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
-             
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
+              
             });
 
 
-            var getDefaultOptions = function getDefaultOptions() {
+            let getDefaultOptions = function getDefaultOptions() {
               return {
                 baseOption: {
                   timeline: {
@@ -455,7 +426,7 @@ const app = new Vue({
                   calculable: true,
                   xAxis: [{
                     type: 'category',
-                    data: months,
+                    data: serie_dias,
                     splitLine: {
                       show: false
                     },
@@ -594,42 +565,42 @@ const app = new Vue({
                     text: 'Enero'
                   },
                   series: [{
-                    data: dataMap.motos['2005']
+                    data: dataMap.motos['enero']
                   }, {
-                    data: dataMap.tvs['2005']
+                    data: dataMap.tvs['enero']
                   }, {
-                    data: dataMap.celulares['2005']
+                    data: dataMap.celulares['enero']
                   }, {
-                    data: dataMap.bicicletas['2005']
+                    data: dataMap.bicicletas['enero']
                   }, {
-                    data: dataMap.bonos['2005']
+                    data: dataMap.bonos['enero']
                   }, {
-                    data: dataMap.amazon['2005']
+                    data: dataMap.amazon['enero']
                   }, {
-                    data: dataMap.recargas['2005']
+                    data: dataMap.recargas['enero']
                   }, {
-                    data: dataMap.betplay['2005']
+                    data: dataMap.betplay['enero']
                   }]
                 }, {
                   title: {
                     text: 'Febrero'
                   },
                   series: [{
-                    data: dataMap.motos['2005']
+                    data: dataMap.motos['febrero']
                   }, {
-                    data: dataMap.tvs['2005']
+                    data: dataMap.tvs['febrero']
                   }, {
-                    data: dataMap.celulares['2005']
+                    data: dataMap.celulares['febrero']
                   }, {
-                    data: dataMap.bicicletas['2005']
+                    data: dataMap.bicicletas['febrero']
                   }, {
-                    data: dataMap.bonos['2005']
+                    data: dataMap.bonos['febrero']
                   }, {
-                    data: dataMap.amazon['2005']
+                    data: dataMap.amazon['febrero']
                   }, {
-                    data: dataMap.recargas['2005']
+                    data: dataMap.recargas['febrero']
                   }, {
-                    data: dataMap.betplay['2005']
+                    data: dataMap.betplay['febrero']
                   }]
                 }]
               };
@@ -642,7 +613,7 @@ const app = new Vue({
           var now = startDate.clone(), dates = [];
       
           while (now.isSameOrBefore(endDate)) {
-              dates.push(now.format('D'));
+              dates.push(now.format('dddd DD-MM-YYYY'));
               now.add(1, 'days');
           }
           return dates;
@@ -654,14 +625,12 @@ const app = new Vue({
         this.getPremiosByDia();
         this.getReconteo();
         this.grafica3_premiosEntregadosByFecha();
+        
         let startDate = moment('2021-11-01');
         let endDate = moment();
-      
         let dateList = this.getDaysBetweenDates(startDate, endDate);
-        console.log(dateList);
-
         var month = endDate.format('M');
-        console.log(month);
+      
     }
  
 })

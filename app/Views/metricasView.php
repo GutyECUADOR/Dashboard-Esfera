@@ -26,8 +26,8 @@
 
               <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
 
-            </div><a class="navbar-brand" href="index.html">
-              <div class="d-flex align-items-center py-3"><img class="me-2" src="assets/img/icons/spot-illustrations/falcon.png" alt="" width="40" /><span class="font-sans-serif">falcon</span>
+            </div><a class="navbar-brand">
+              <div class="d-flex align-items-center py-3"><img class="me-2" src="assets/img/icons/spot-illustrations/falcon.png" alt="" width="40" /><span class="font-sans-serif">Sphera</span>
               </div>
             </a>
           </div>
@@ -60,12 +60,12 @@
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
-                  <h6 class="mb-0 mt-2">Total Order</h6>
+                  <h6 class="mb-0 mt-2">Visitas a la página</h6>
                 </div>
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
-                      <div class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">58.4K</div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>13.6%</span>
+                      <div class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">0</div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
                     </div>
                     <div class="col-auto ps-0 mt-n4">
                       <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
@@ -79,25 +79,17 @@
                 <div class="card-body">
                   <div class="row h-100 justify-content-between g-0">
                     <div class="col-5 col-sm-6 col-xxl pe-2">
-                      <h6 class="mt-1">Market Share</h6>
+                      <h6 class="mt-1">Personas registradas en la promo</h6>
                       <div class="fs--2 mt-3">
                         <div class="d-flex flex-between-center mb-1">
-                          <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-semi-bold">samsung</span></div>
-                          <div class="d-xxl-none">33%</div>
-                        </div>
-                        <div class="d-flex flex-between-center mb-1">
-                          <div class="d-flex align-items-center"><span class="dot bg-info"></span><span class="fw-semi-bold">Huawei</span></div>
-                          <div class="d-xxl-none">29%</div>
-                        </div>
-                        <div class="d-flex flex-between-center mb-1">
-                          <div class="d-flex align-items-center"><span class="dot bg-300"></span><span class="fw-semi-bold">Huawei</span></div>
-                          <div class="d-xxl-none">20%</div>
+                          <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-semi-bold">{{ totalPremiosEntregados }} Participantes</span></div>
+                          <div class="d-xxl-none">100</div>
                         </div>
                       </div>
                     </div>
                     <div class="col-auto position-relative">
                       <div class="echart-market-share"></div>
-                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">26M</div>
+                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ totalPremiosEntregados }}</div>
                     </div>
                   </div>
                 </div>
@@ -106,7 +98,7 @@
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header d-flex flex-between-center pb-0">
-                  <h6 class="mb-0">Weather</h6>
+                  <h6 class="mb-0">Clima</h6>
                   <div class="dropdown font-sans-serif btn-reveal-trigger">
                     <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-weather-update" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
                     <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-weather-update"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
@@ -119,15 +111,15 @@
                     <div class="col">
                       <div class="d-flex align-items-center"><img class="me-3" src="assets/img/icons/weather-icon.png" alt="" height="60" />
                         <div>
-                          <h6 class="mb-2">New York City</h6>
+                          <h6 class="mb-2">No definida</h6>
                           <div class="fs--2 fw-semi-bold">
-                            <div class="text-warning">Sunny</div>Precipitation: 50%
+                            <div class="text-warning">Sin datos</div>Precipitation: 50%
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="col-auto text-center ps-2">
-                      <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">31&deg;</div>
+                      <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">0&deg;</div>
                       <div class="fs--1 text-800">32&deg; / 25&deg;</div>
                     </div>
                   </div>
@@ -206,8 +198,17 @@
                     <div class="col">
                       <h6 class="mb-0">Grafica 3 - Premios entregados por fecha</h6>
                     </div>
-                    <div class="col-auto text-center pe-card">
-                      <input type="date" class="form-select form-select-sm">
+                    <div class="col-auto d-flex w-100">
+                      <input type="date" v-model="grafica3.fechaINI" @change="grafica3_premiosEntregadosByFecha" class="form-control form-control-sm me-2">
+                      <input type="date" v-model="grafica3.fechaFIN" @change="grafica3_premiosEntregadosByFecha" class="form-control form-control-sm">
+                     
+                      <div class="dropdown font-sans-serif btn-reveal-trigger">
+                        <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
+                          <a class="dropdown-item" @click="grafica3_premiosEntregadosByFecha">Recargar</a>
+                          <a class="dropdown-item" href="#!">Exportar Informe</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
