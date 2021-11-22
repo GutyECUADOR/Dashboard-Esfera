@@ -4,6 +4,8 @@ const app = new Vue({
         title: 'Dashboard',
         totalPremiosEntregados: 0,
         grafica1: {
+          fechaINI : moment().format("YYYY-MM-01"),
+          fechaFIN : moment().format("YYYY-MM-30"),
           valores : []
         },
         grafica2: {
@@ -29,12 +31,13 @@ const app = new Vue({
         },
         async getPremiosByPremio() {
            
-            const response = await fetch(`./api/ganadores/totalPremiosByPremio`, {
+            const response = await fetch(`./api/ganadores/totalPremiosByPremio/${this.grafica1.fechaINI}/${this.grafica1.fechaFIN}`, {
                 })
                 .then(response => {
                     return response.json();
                 })
                 .then(response => {
+                  console.log(response);
                   return response.map( product => {
                     return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
                   });
@@ -43,13 +46,7 @@ const app = new Vue({
                 }); 
 
             this.grafica1.valores = response;
-
-            let data_example = [
-                ['TV', 110], 
-                ['Betplay', 83], 
-            ];
-            
-
+           
             let dom = document.getElementById("echar-canjeProductos");
             let myChart = echarts.init(dom);
             
