@@ -13,6 +13,10 @@ const app = new Vue({
           fechaFIN : moment().format("YYYY-MM-30"),
           categorias : [],
           serie: []
+        },
+        grafica3: {
+          fechaINI : moment().format("YYYY-MM-01"),
+          fechaFIN : moment().format("YYYY-MM-30")
         }
     },
     methods:{
@@ -25,7 +29,6 @@ const app = new Vue({
                             .catch( error => {
                                 console.error(error);
                             }); 
-          console.log(response);
           this.totalPremiosEntregados = response.totalPremiosEntregados.total;
           
         },
@@ -37,7 +40,6 @@ const app = new Vue({
                     return response.json();
                 })
                 .then(response => {
-                  console.log(response);
                   return response.map( product => {
                     return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
                   });
@@ -298,16 +300,31 @@ const app = new Vue({
 
         },
         async grafica3_premiosEntregadosByFecha(){
-          var $barTimelineChartEl = document.querySelector('.echart-bar-timeline-chart-example');
+
+          //Consulta de datos a la DB
+          const response = await fetch(`./api/premios/premiosEntregadosByFecha/${this.grafica1.fechaINI}/${this.grafica1.fechaFIN}`, {
+          })
+          .then(response => {
+              return response.json();
+          })
+          .then(response => {
+            return response.map( product => {
+              return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
+            });
+          }).catch( error => {
+              console.error(error);
+          }); 
+
+          let $barTimelineChartEl = document.querySelector('.echart-bar-timeline-chart-example');
 
           if ($barTimelineChartEl) {
             // Get options from data attribute
-            var userOptions = utils.getData($barTimelineChartEl, 'options');
-            var chart = window.echarts.init($barTimelineChartEl);
-            var months = ['1','2','3','4','5'];
-            var dataMap = {};
+            let userOptions = utils.getData($barTimelineChartEl, 'options');
+            let chart = window.echarts.init($barTimelineChartEl);
+            let months = ['1','2','3','4','5'];
+            let dataMap = {};
 
-            var dataFormatter = function dataFormatter(obj) {
+            let dataFormatter = function dataFormatter(obj) {
               return Object.keys(obj).reduce(function (acc, val) {
                 return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, val, obj[val].map(function (value, index) {
                   return {
@@ -319,21 +336,21 @@ const app = new Vue({
             };
 
             dataMap.motos = dataFormatter({
-              2005: [88.68, 112.38, 1400, 262.42, 589.56, 882.41, 625.61, 684.6, 90.26, 1461.51, 892.83, 966.5],
+              noviembre: [300.68, 112.38, 1400, 262.42],
               2006: [88.8, 103.35, 1461.81, 276.77, 634.94, 939.43, 672.76, 750.14, 93.81, 1545.05, 925.1, 1011.03],
               2007: [101.26, 110.19, 1804.72, 311.97, 762.1, 1133.42, 783.8, 915.38, 101.84, 1816.31, 986.02, 1200.18],
               2008: [112.83, 122.58, 2034.59, 313.58, 907.95, 1302.02, 916.72, 1088.94, 111.8, 2100.11, 1095.96, 1418.09]
             
             });
             dataMap.tvs = dataFormatter({
-              2005: [2026.51, 2135.07, 5271.57, 2357.04, 1773.21, 3869.4, 1580.83, 2971.68, 4381.2, 10524.96, 7164.75, 2245.9],
+              noviembre: [2026.51, 2135.07, 5271.57, 2357.04],
               2006: [2191.43, 2457.08, 6110.43, 2755.66, 2374.96, 4566.83, 1915.29, 3365.31, 4969.95, 12282.89, 8511.51, 2711.18],
               2007: [2509.4, 2892.53, 7201.88, 3454.49, 3193.67, 5544.14, 2475.45, 3695.58, 5571.06, 14471.26, 10154.25, 3370.96],
               2008: [2626.41, 3709.78, 8701.34, 4242.36, 4376.19, 7158.84, 3097.12, 4319.75, 6085.84, 16993.34, 11567.42, 4198.93]
               
             });
             dataMap.celulares = dataFormatter({
-              2005: [4854.33, 1658.19, 3340.54, 1611.07, 1542.26, 3295.45, 1413.83, 1857.42, 4776.2, 6612.22, 5360.1, 2137.77],
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
               2006: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
               2007: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
               2008: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
@@ -341,7 +358,7 @@ const app = new Vue({
             });
 
             dataMap.bicicletas = dataFormatter({
-              2005: [4854.33, 1658.19, 3340.54, 1611.07, 1542.26, 3295.45, 1413.83, 1857.42, 4776.2, 6612.22, 5360.1, 2137.77],
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
               2006: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
               2007: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
               2008: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
@@ -349,21 +366,21 @@ const app = new Vue({
             });
 
             dataMap.bonos = dataFormatter({
-              2005: [88.68, 112.38, 1400, 262.42, 589.56, 882.41, 625.61, 684.6, 90.26, 1461.51, 892.83, 966.5],
+              noviembre: [88.68, 112.38, 1400, 262.42],
               2006: [88.8, 103.35, 1461.81, 276.77, 634.94, 939.43, 672.76, 750.14, 93.81, 1545.05, 925.1, 1011.03],
               2007: [101.26, 110.19, 1804.72, 311.97, 762.1, 1133.42, 783.8, 915.38, 101.84, 1816.31, 986.02, 1200.18],
               2008: [112.83, 122.58, 2034.59, 313.58, 907.95, 1302.02, 916.72, 1088.94, 111.8, 2100.11, 1095.96, 1418.09]
             
             });
             dataMap.amazon = dataFormatter({
-              2005: [2026.51, 2135.07, 5271.57, 2357.04, 1773.21, 3869.4, 1580.83, 2971.68, 4381.2, 10524.96, 7164.75, 2245.9],
+              noviembre: [2026.51, 2135.07, 5271.57, 2357.04],
               2006: [2191.43, 2457.08, 6110.43, 2755.66, 2374.96, 4566.83, 1915.29, 3365.31, 4969.95, 12282.89, 8511.51, 2711.18],
               2007: [2509.4, 2892.53, 7201.88, 3454.49, 3193.67, 5544.14, 2475.45, 3695.58, 5571.06, 14471.26, 10154.25, 3370.96],
               2008: [2626.41, 3709.78, 8701.34, 4242.36, 4376.19, 7158.84, 3097.12, 4319.75, 6085.84, 16993.34, 11567.42, 4198.93]
               
             });
             dataMap.recargas = dataFormatter({
-              2005: [4854.33, 1658.19, 3340.54, 1611.07, 1542.26, 3295.45, 1413.83, 1857.42, 4776.2, 6612.22, 5360.1, 2137.77],
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
               2006: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
               2007: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
               2008: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
@@ -371,7 +388,7 @@ const app = new Vue({
             });
 
             dataMap.betplay = dataFormatter({
-              2005: [4854.33, 1658.19, 3340.54, 1611.07, 1542.26, 3295.45, 1413.83, 1857.42, 4776.2, 6612.22, 5360.1, 2137.77],
+              noviembre: [4854.33, 1658.19, 3340.54, 1611.07],
               2006: [5837.55, 1902.31, 3895.36, 1846.18, 1934.35, 3798.26, 1687.07, 2096.35, 5508.48, 7914.11, 6281.86, 2390.29],
               2007: [7236.15, 2250.04, 4600.72, 2257.99, 2467.41, 4486.74, 2025.44, 2493.04, 6821.11, 9730.91, 7613.46, 2789.78],
               2008: [8375.76, 2886.65, 5276.04, 2759.46, 3212.06, 5207.72, 2412.26, 2905.68, 7872.23, 11888.53, 8799.31, 3234.64]
@@ -535,21 +552,21 @@ const app = new Vue({
                     text: 'Noviembre'
                   },
                   series: [{
-                    data: dataMap.motos['2005']
+                    data: dataMap.motos['noviembre']
                   }, {
-                    data: dataMap.tvs['2005']
+                    data: dataMap.tvs['noviembre']
                   }, {
-                    data: dataMap.celulares['2005']
+                    data: dataMap.celulares['noviembre']
                   }, {
-                    data: dataMap.bicicletas['2005']
+                    data: dataMap.bicicletas['noviembre']
                   }, {
-                    data: dataMap.bonos['2005']
+                    data: dataMap.bonos['noviembre']
                   }, {
-                    data: dataMap.amazon['2005']
+                    data: dataMap.amazon['noviembre']
                   }, {
-                    data: dataMap.recargas['2005']
+                    data: dataMap.recargas['noviembre']
                   }, {
-                    data: dataMap.betplay['2005']
+                    data: dataMap.betplay['noviembre']
                   }]
                 }, {
                   title: {
@@ -620,6 +637,15 @@ const app = new Vue({
 
             echartSetOption(chart, userOptions, getDefaultOptions);
           }
+        },
+        getDaysBetweenDates (startDate, endDate) {
+          var now = startDate.clone(), dates = [];
+      
+          while (now.isSameOrBefore(endDate)) {
+              dates.push(now.format('M/D/YYYY'));
+              now.add(1, 'days');
+          }
+          return dates;
         }
         
     },
@@ -628,6 +654,14 @@ const app = new Vue({
         this.getPremiosByDia();
         this.getReconteo();
         this.grafica3_premiosEntregadosByFecha();
+        let startDate = moment('2021-11-01');
+        let endDate = moment();
+      
+        let dateList = this.getDaysBetweenDates(startDate, endDate);
+        console.log(dateList);
+
+        var month = endDate.format('M');
+        console.log(month);
     }
  
 })

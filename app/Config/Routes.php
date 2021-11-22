@@ -43,6 +43,7 @@ $routes->group('api', function ($routes) {
     $routes->get('ganadores/totalPremiosByPremio/(:any)/(:any)', 'RestGanadorController::totalPremiosByPremio/$1/$2');
     $routes->get('premios/getRecuento', 'RestPremioController::getRecuento');
     $routes->get('premios/totalPremiosByDia/(:any)/(:any)', 'RestPremioController::totalPremiosByDia/$1/$2');
+    $routes->get('premios/premiosEntregadosByFecha/(:any)/(:any)', 'RestPremioController::premiosEntregadosByFecha/$1/$2');
     $routes->resource('ganadores', ['controller' => 'RestGanadorController']);
 });
 

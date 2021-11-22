@@ -204,7 +204,7 @@
                 <div class="card-header bg-light">
                   <div class="row align-items-center">
                     <div class="col">
-                      <h6 class="mb-0">Grafica 3</h6>
+                      <h6 class="mb-0">Grafica 3 - Premios entregados por fecha</h6>
                     </div>
                     <div class="col-auto text-center pe-card">
                       <input type="date" class="form-select form-select-sm">
