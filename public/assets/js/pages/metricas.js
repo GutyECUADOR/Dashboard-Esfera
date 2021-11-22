@@ -311,7 +311,55 @@ const app = new Vue({
               console.error(error);
           }); 
 
-          console.log(response);
+          let data_motos = response.data.filter( premio => {
+              if (premio.id == '1') {
+                return premio.TOTAL;
+              }
+          }).map( premio => premio.TOTAL);
+
+          let data_tvs = response.data.filter( premio => {
+            if (premio.id == '2') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_celulares = response.data.filter( premio => {
+            if (premio.id == '3') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_bicicletas = response.data.filter( premio => {
+            if (premio.id == '4') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_bonos = response.data.filter( premio => {
+            if (premio.id == '5') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_amazon = response.data.filter( premio => {
+            if (premio.id == '6') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_recargas = response.data.filter( premio => {
+            if (premio.id == '7') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          let data_betplay = response.data.filter( premio => {
+            if (premio.id == '8') {
+              return premio.TOTAL;
+            }
+          }).map( premio => premio.TOTAL);
+
+          console.log(data_betplay);
 
           let $barTimelineChartEl = document.querySelector('.echart-bar-timeline-chart-example');
 
@@ -337,32 +385,31 @@ const app = new Vue({
             };
 
             dataMap.motos = dataFormatter({
-              noviembre: [300.68, 112.38, 1400, 262.42]
-            
+              noviembre: data_motos
             });
             dataMap.tvs = dataFormatter({
-              noviembre: [2026.51, 2135.07, 5271.57, 2357.04]
+              noviembre: data_tvs
             });
             dataMap.celulares = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
+              noviembre: data_celulares
             });
 
             dataMap.bicicletas = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
+              noviembre: data_bicicletas
             });
 
             dataMap.bonos = dataFormatter({
-              noviembre: [88.68, 112.38, 1400, 262.42]
+              noviembre: data_bonos
             });
             dataMap.amazon = dataFormatter({
-              noviembre: [2026.51, 2135.07, 5271.57, 2357.04]
+              noviembre: data_amazon
             });
             dataMap.recargas = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
+              noviembre: data_recargas
             });
 
             dataMap.betplay = dataFormatter({
-              noviembre: [4854.33, 1658.19, 3340.54, 1611.07]
+              noviembre: data_betplay
               
             });
 
@@ -374,7 +421,7 @@ const app = new Vue({
                     axisType: 'category',
                     autoPlay: false,
                     playInterval: 1000,
-                    data: ['Noviembre','Diciembre','Enero','Febrero'],
+                    data: ['Busqueda'],
                     label: {
                       formatter: function formatter(s) {
                         return s;
@@ -443,7 +490,7 @@ const app = new Vue({
                     type: 'value',
                     axisLabel: {
                       formatter: function formatter(value) {
-                        return "".concat(value / 1000, "k");
+                        return value;
                       },
                       color: utils.getGrays()['600']
                     },
@@ -520,7 +567,7 @@ const app = new Vue({
                 },
                 options: [{
                   title: {
-                    text: 'Noviembre'
+                    text: 'Búsqueda'
                   },
                   series: [{
                     data: dataMap.motos['noviembre']
