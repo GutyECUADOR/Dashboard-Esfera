@@ -841,6 +841,7 @@ const app = new Vue({
                   }],
                   tooltip: {
                     trigger: 'item',
+                    formatter: '{b} : {c} ({d}%)',
                     padding: [7, 10],
                     backgroundColor: utils.getGrays()['100'],
                     borderColor: utils.getGrays()['300'],
