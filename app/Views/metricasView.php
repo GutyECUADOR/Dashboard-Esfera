@@ -59,6 +59,22 @@
             </div>
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
+                <div class="card-body">
+                  <div class="row h-100 justify-content-between g-0">
+                    <div class="col-5 col-sm-6 col-xxl pe-2">
+                      <h6 class="mt-1">Promedio de premios entregados por dia</h6>
+                      
+                    </div>
+                    <div class="col-auto position-relative">
+                      <div class="echart-market-share"></div>
+                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ promedioPremiosEntregadosByDia }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xxl-3">
+              <div class="card h-md-100">
                 <div class="card-header pb-0">
                   <h6 class="mb-0 mt-2">Visitas a la página</h6>
                 </div>
@@ -76,46 +92,16 @@
             </div>
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
-                <div class="card-body">
-                  <div class="row h-100 justify-content-between g-0">
-                    <div class="col-5 col-sm-6 col-xxl pe-2">
-                      <h6 class="mt-1">Promedio de premios entregados por dia</h6>
-                      
-                    </div>
-                    <div class="col-auto position-relative">
-                      <div class="echart-market-share"></div>
-                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ promedioPremiosEntregadosByDia }}</div>
-                    </div>
-                  </div>
+                <div class="card-header pb-0">
+                  <h6 class="mb-0 mt-2">Tiempo de permanencia</h6>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-xxl-3">
-              <div class="card h-md-100">
-                <div class="card-header d-flex flex-between-center pb-0">
-                  <h6 class="mb-0">Clima</h6>
-                  <div class="dropdown font-sans-serif btn-reveal-trigger">
-                    <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-weather-update" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                    <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-weather-update"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                      <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                <div class="card-body d-flex flex-column justify-content-end">
+                  <div class="row justify-content-between">
+                    <div class="col-auto align-self-end">
+                      <div class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">0</div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
                     </div>
-                  </div>
-                </div>
-                <div class="card-body pt-2">
-                  <div class="row g-0 h-100 align-items-center">
-                    <div class="col">
-                      <div class="d-flex align-items-center"><img class="me-3" src="assets/img/icons/weather-icon.png" alt="" height="60" />
-                        <div>
-                          <h6 class="mb-2">No definida</h6>
-                          <div class="fs--2 fw-semi-bold">
-                            <div class="text-warning">Sin datos</div>Precipitation: 50%
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto text-center ps-2">
-                      <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">0&deg;</div>
-                      <div class="fs--1 text-800">32&deg; / 25&deg;</div>
+                    <div class="col-auto ps-0 mt-n4">
+                      <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
                     </div>
                   </div>
                 </div>
@@ -225,6 +211,39 @@
                 <div class="card h-100">
                   <div class="card-body h-100">
                     <div class="echart-pie-chart-example" style="min-height: 320px;" data-echart-responsive="true"></div>
+                  </div>
+                </div>
+                  
+                
+              </div>
+            </div>
+
+            <div class="col-lg-6 pe-lg-2 mb-3">
+              <div class="card h-lg-100 overflow-hidden">
+                <div class="card-header bg-light">
+                  <div class="row flex-between-center">
+                      <div class="col-auto">
+                        <h6 class="mb-0">Pastel porcentaje premios entregados por premio</h6>
+                      </div>
+                      <div class="col-auto text-center pe-card">
+                        <select v-model="grafica5.premioID" @change="setTotalPremioByID(grafica5.premioID)" class="form-select form-select-sm">
+                          <option value='1'>Motos</option>
+                          <option value='2'>TVs</option>
+                          <option value='3'>Telefonos</option>
+                          <option value='4'>Bicicletas</option>
+                          <option value='5'>Bonos</option>
+                          <option value='6'>Amazon</option>
+                          <option value='7'>Recarga</option>
+                          <option value='8'>Betplay</option>
+                         
+                        </select>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="card h-100">
+                  <div class="card-body h-100">
+                    <div class="echart-pie-chart-premios" style="min-height: 320px;" data-echart-responsive="true"></div>
                   </div>
                 </div>
                   

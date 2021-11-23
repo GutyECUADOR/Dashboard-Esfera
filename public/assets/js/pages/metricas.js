@@ -16,6 +16,10 @@ const app = new Vue({
         grafica3: {
           fechaINI : moment().format("YYYY-MM-19"),
           fechaFIN : moment().format("YYYY-MM-DD")
+        },
+        grafica5: {
+          premioID: "1",
+          totalPremios: 10
         }
     },
     methods:{
@@ -772,6 +776,148 @@ const app = new Vue({
 
 
         },
+        async grafica5_pastelPorcentajePremiosByPremio(){
+          const response = await fetch(`./api/premios/porcentajePremiosEntregadosByPremio/${this.grafica5.premioID}/${this.grafica5.totalPremios}`, {
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+              return response.map( row => {
+                return [
+                  {
+                    value: parseInt(row.TOTAL_ENTREGADOS),
+                    name: 'Entregados',
+                    itemStyle: {
+                      color: utils.getColor('primary')
+                    }
+                  },
+                  {
+                    value: parseInt(row.TOTAL_PENDIENTES),
+                    name: 'Pendiente entrega',
+                    itemStyle: {
+                      color: utils.getColor('danger')
+                    }
+                  }]
+              });
+            })
+            .catch( error => {
+                console.error(error);
+            }); 
+
+           
+            console.log(response);
+          
+            let $pieChartEl = document.querySelector('.echart-pie-chart-premios');
+
+            if ($pieChartEl) {
+              // Get options from data attribute
+              let userOptions = utils.getData($pieChartEl, 'options');
+              let chart = window.echarts.init($pieChartEl);
+          
+              let getDefaultOptions = function getDefaultOptions() {
+                return {
+                  legend: {
+                    left: 'left',
+                    textStyle: {
+                      color: utils.getGrays()['600']
+                    }
+                  },
+                  series: [{
+                    type: 'pie',
+                    radius: window.innerWidth < 530 ? '45%' : '60%',
+                    label: {
+                      color: utils.getGrays()['700']
+                    },
+                    center: ['50%', '55%'],
+                    data: response[0],
+                    emphasis: {
+                      itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: utils.rgbaColor(utils.getGrays()['600'], 0.5)
+                      }
+                    }
+                  }],
+                  tooltip: {
+                    trigger: 'item',
+                    padding: [7, 10],
+                    backgroundColor: utils.getGrays()['100'],
+                    borderColor: utils.getGrays()['300'],
+                    textStyle: {
+                      color: utils.getColors().dark
+                    },
+                    borderWidth: 1,
+                    transitionDuration: 0,
+                    axisPointer: {
+                      type: 'none'
+                    }
+                  }
+                };
+              };
+          
+              echartSetOption(chart, userOptions, getDefaultOptions); //- set chart radius on window resize
+          
+              utils.resize(function () {
+                if (window.innerWidth < 530) {
+                  chart.setOption({
+                    series: [{
+                      radius: '45%'
+                    }]
+                  });
+                } else {
+                  chart.setOption({
+                    series: [{
+                      radius: '60%'
+                    }]
+                  });
+                }
+              });
+            }
+       
+
+
+        },
+        setTotalPremioByID(id){
+          switch (parseInt(id)) {
+            case 1:
+              this.grafica5.totalPremios = 10;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+              break;
+            case 2:
+              this.grafica5.totalPremios = 50;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 3:
+              this.grafica5.totalPremios = 100;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 4:
+              this.grafica5.totalPremios = 100;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 5:
+              this.grafica5.totalPremios = 500;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 6:
+              this.grafica5.totalPremios = 1500;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 7:
+              this.grafica5.totalPremios = 156671;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+            case 8:
+              this.grafica5.totalPremios = 298500;
+              this.grafica5_pastelPorcentajePremiosByPremio();
+            break;
+          
+            default:
+              this.grafica5.totalPremios = 0;
+              break;
+          }
+        }
         
     },
     mounted(){
@@ -780,6 +926,7 @@ const app = new Vue({
         this.grafica2_getPremiosByDia();
         this.grafica3_premiosEntregadosByFecha();
         this.grafica4_pastelPorcentajePremios();
+        this.grafica5_pastelPorcentajePremiosByPremio();
         
     }
  
