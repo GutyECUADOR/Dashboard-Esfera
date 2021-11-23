@@ -107,7 +107,6 @@ class RestPremioController extends ResourceController
         return $this->respond($response);
     }
 
-
     public function getPromedioPremiosByPremio(){
 
         $db = \Config\Database::connect();
@@ -120,6 +119,22 @@ class RestPremioController extends ResourceController
         GROUP BY 
             premios.id
         
+        ";
+        $query= $db->query($query);
+        $response = $query->getResultArray();
+
+        return $this->respond($response);
+    }
+
+    public function porcentajePremiosEntregados(){
+
+        $db = \Config\Database::connect();
+        $query = "
+            SELECT 
+                COUNT(ganadores.id) AS TOTAL_ENTREGADOS,
+                457431  - COUNT(ganadores.id) AS TOTAL_PENDIENTES
+            FROM ganadores 
+   
         ";
         $query= $db->query($query);
         $response = $query->getResultArray();

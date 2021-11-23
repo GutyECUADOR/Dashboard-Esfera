@@ -175,7 +175,7 @@
             </div>
           </div>
           <div class="row g-0">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-3">
               <div class="card h-lg-100 overflow-hidden">
                 <div class="card-header bg-light">
                   <div class="row align-items-center">
@@ -206,6 +206,28 @@
 
 
 
+                
+              </div>
+            </div>
+           
+          </div>
+          <div class="row g-0">
+            <div class="col-lg-6 pe-lg-2 mb-3">
+              <div class="card h-lg-100 overflow-hidden">
+                <div class="card-header bg-light">
+                  <div class="row flex-between-center">
+                      <div class="col-auto">
+                        <h6 class="mb-0">Pastel porcentaje premios entregados</h6>
+                      </div>
+                  </div>
+                </div>
+               
+                <div class="card h-100">
+                  <div class="card-body h-100">
+                    <div class="echart-pie-chart-example" style="min-height: 320px;" data-echart-responsive="true"></div>
+                  </div>
+                </div>
+                  
                 
               </div>
             </div>

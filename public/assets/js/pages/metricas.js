@@ -661,14 +661,117 @@ const app = new Vue({
           }
         },
         getDaysBetweenDates (startDate, endDate) {
-          var now = startDate.clone(), dates = [];
+          let now = startDate.clone(), dates = [];
       
           while (now.isSameOrBefore(endDate)) {
               dates.push(now.format('dddd DD-MM-YYYY'));
               now.add(1, 'days');
           }
           return dates;
-        }
+        },
+        async grafica4_pastelPorcentajePremios(){
+
+          const response = await fetch(`./api/premios/porcentajePremiosEntregados`, {
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+              return response.map( row => {
+                return [
+                  {
+                    value: parseInt(row.TOTAL_ENTREGADOS),
+                    name: 'Entregados',
+                    itemStyle: {
+                      color: utils.getColor('primary')
+                    }
+                  },
+                  {
+                    value: parseInt(row.TOTAL_PENDIENTES),
+                    name: 'Pendiente entrega',
+                    itemStyle: {
+                      color: utils.getColor('danger')
+                    }
+                  }]
+              });
+            })
+            .catch( error => {
+                console.error(error);
+            }); 
+
+           
+            console.log(response);
+          
+            let $pieChartEl = document.querySelector('.echart-pie-chart-example');
+
+            if ($pieChartEl) {
+              // Get options from data attribute
+              let userOptions = utils.getData($pieChartEl, 'options');
+              let chart = window.echarts.init($pieChartEl);
+          
+              let getDefaultOptions = function getDefaultOptions() {
+                return {
+                  legend: {
+                    left: 'left',
+                    textStyle: {
+                      color: utils.getGrays()['600']
+                    }
+                  },
+                  series: [{
+                    type: 'pie',
+                    radius: window.innerWidth < 530 ? '45%' : '60%',
+                    label: {
+                      color: utils.getGrays()['700']
+                    },
+                    center: ['50%', '55%'],
+                    data: response[0],
+                    emphasis: {
+                      itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: utils.rgbaColor(utils.getGrays()['600'], 0.5)
+                      }
+                    }
+                  }],
+                  tooltip: {
+                    trigger: 'item',
+                    padding: [7, 10],
+                    backgroundColor: utils.getGrays()['100'],
+                    borderColor: utils.getGrays()['300'],
+                    textStyle: {
+                      color: utils.getColors().dark
+                    },
+                    borderWidth: 1,
+                    transitionDuration: 0,
+                    axisPointer: {
+                      type: 'none'
+                    }
+                  }
+                };
+              };
+          
+              echartSetOption(chart, userOptions, getDefaultOptions); //- set chart radius on window resize
+          
+              utils.resize(function () {
+                if (window.innerWidth < 530) {
+                  chart.setOption({
+                    series: [{
+                      radius: '45%'
+                    }]
+                  });
+                } else {
+                  chart.setOption({
+                    series: [{
+                      radius: '60%'
+                    }]
+                  });
+                }
+              });
+            }
+       
+
+
+        },
         
     },
     mounted(){
@@ -676,12 +779,8 @@ const app = new Vue({
         this.grafica1_getPromedioPremiosByPremio();
         this.grafica2_getPremiosByDia();
         this.grafica3_premiosEntregadosByFecha();
+        this.grafica4_pastelPorcentajePremios();
         
-        let startDate = moment('2021-11-01');
-        let endDate = moment();
-        let dateList = this.getDaysBetweenDates(startDate, endDate);
-        var month = endDate.format('M');
-      
     }
  
 })
