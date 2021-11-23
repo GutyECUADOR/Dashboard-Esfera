@@ -22,9 +22,21 @@ class RestPremioController extends ResourceController
         ";
         $query= $db->query($query);
         $totalPremiosEntregados = $query->getRow();    
+
+        $query = "
+            SELECT 
+                COUNT(*) / ((CURDATE()+1) - STR_TO_DATE('2021-11-19', '%Y-%m-%d')) AS promedio
+            FROM ganadores 
+            WHERE premio_id != 0 AND DNI != ''
+   
+        ";
+        $query= $db->query($query);
+        $promedioPremiosEntregadosByDia = $query->getRow();    
         
         $response = array(
-            'totalPremiosEntregados' => $totalPremiosEntregados);
+            'totalPremiosEntregados' => $totalPremiosEntregados,
+            'promedioPremiosEntregadosByDia' => $promedioPremiosEntregadosByDia,
+        );
         
         return $this->respond($response);
     }
@@ -91,6 +103,20 @@ class RestPremioController extends ResourceController
         $query= $db->query($query);
         $resultset = $query->getResultArray(); 
         $response = array('status' => 'OK', 'message' => 'Respuesta Correcta', 'data' => $resultset);
+
+        return $this->respond($response);
+    }
+
+
+    public function getPromedioPremiosByPremio(){
+
+        $db = \Config\Database::connect();
+        $query = "
+        
+        
+        ";
+        $query= $db->query($query);
+        $response = $query->getResultArray();
 
         return $this->respond($response);
     }

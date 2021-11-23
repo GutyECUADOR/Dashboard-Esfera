@@ -3,9 +3,8 @@ const app = new Vue({
     data: {
         title: 'Dashboard',
         totalPremiosEntregados: 0,
+        promedioPremiosEntregadosByDia: 0,
         grafica1: {
-          fechaINI : moment().format("YYYY-MM-01"),
-          fechaFIN : moment().format("YYYY-MM-30"),
           valores : []
         },
         grafica2: {
@@ -29,12 +28,15 @@ const app = new Vue({
                             .catch( error => {
                                 console.error(error);
                             }); 
+          console.log(response);
+                      
           this.totalPremiosEntregados = response.totalPremiosEntregados.total;
+          this.promedioPremiosEntregadosByDia = parseFloat(response.promedioPremiosEntregadosByDia.promedio).toFixed(2);
           
         },
-        async getPremiosByPremio() {
+        async grafica1_getPromedioPremiosByPremio() {
            
-            const response = await fetch(`./api/ganadores/totalPremiosByPremio/${this.grafica1.fechaINI}/${this.grafica1.fechaFIN}`, {
+            const response = await fetch(`./api/premios/getPromedioPremiosByPremio`, {
                 })
                 .then(response => {
                     return response.json();
@@ -149,7 +151,7 @@ const app = new Vue({
             
            
         },
-        async getPremiosByDia(){
+        async grafica2_getPremiosByDia(){
 
           const response = await fetch(`./api/premios/totalPremiosByDia/${this.grafica2.fechaINI}/${this.grafica2.fechaFIN}`, {
           })
@@ -668,9 +670,9 @@ const app = new Vue({
         
     },
     mounted(){
-        this.getPremiosByPremio();
-        this.getPremiosByDia();
         this.getReconteo();
+        this.grafica1_getPromedioPremiosByPremio();
+        this.grafica2_getPremiosByDia();
         this.grafica3_premiosEntregadosByFecha();
         
         let startDate = moment('2021-11-01');

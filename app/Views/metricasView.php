@@ -79,17 +79,12 @@
                 <div class="card-body">
                   <div class="row h-100 justify-content-between g-0">
                     <div class="col-5 col-sm-6 col-xxl pe-2">
-                      <h6 class="mt-1">Personas registradas en la promo</h6>
-                      <div class="fs--2 mt-3">
-                        <div class="d-flex flex-between-center mb-1">
-                          <div class="d-flex align-items-center"><span class="dot bg-primary"></span><span class="fw-semi-bold">{{ totalPremiosEntregados }} Participantes</span></div>
-                          <div class="d-xxl-none">100</div>
-                        </div>
-                      </div>
+                      <h6 class="mt-1">Promedio de premios entregados por dia</h6>
+                      
                     </div>
                     <div class="col-auto position-relative">
                       <div class="echart-market-share"></div>
-                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ totalPremiosEntregados }}</div>
+                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ promedioPremiosEntregadosByDia }}</div>
                     </div>
                   </div>
                 </div>
@@ -133,20 +128,9 @@
                 <div class="card-header bg-light">
                   <div class="row flex-between-center">
                       <div class="col-auto">
-                        <h6 class="mb-0">Premios canjeados por dia</h6>
+                        <h6 class="mb-0">Promedio de premios entregados por tipo de premio</h6>
                       </div>
-                      <div class="col-auto d-flex w-100">
-                        <input type="date" v-model="grafica1.fechaINI" @change="getPremiosByPremio" class="form-control form-control-sm me-2">
-                        <input type="date" v-model="grafica1.fechaFIN" @change="getPremiosByPremio" class="form-control form-control-sm">
                       
-                        <div class="dropdown font-sans-serif btn-reveal-trigger">
-                          <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                          <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
-                            <a class="dropdown-item" @click="getPremiosByPremio">Recargar</a>
-                            <a class="dropdown-item" href="#!">Exportar Informe</a>
-                          </div>
-                        </div>
-                      </div>
                   </div>
                 </div>
                
@@ -169,13 +153,13 @@
                       <h6 class="mb-0">Premios canjeados por dia</h6>
                     </div>
                     <div class="col-auto d-flex w-100">
-                      <input type="date" v-model="grafica2.fechaINI" @change="getPremiosByDia" class="form-control form-control-sm me-2">
-                      <input type="date" v-model="grafica2.fechaFIN" @change="getPremiosByDia" class="form-control form-control-sm">
+                      <input type="date" v-model="grafica2.fechaINI" @change="grafica2_getPremiosByDia" class="form-control form-control-sm me-2">
+                      <input type="date" v-model="grafica2.fechaFIN" @change="grafica2_getPremiosByDia" class="form-control form-control-sm">
                      
                       <div class="dropdown font-sans-serif btn-reveal-trigger">
                         <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
                         <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
-                          <a class="dropdown-item" @click="getPremiosByDia">Recargar</a>
+                          <a class="dropdown-item" @click="grafica2_getPremiosByDia">Recargar</a>
                           <a class="dropdown-item" href="#!">Exportar Informe</a>
                         </div>
                       </div>
