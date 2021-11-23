@@ -43,11 +43,13 @@ const app = new Vue({
                 })
                 .then(response => {
                   return response.map( product => {
-                    return [product.NOMBRE_PREMIO, parseInt(product.TOTAL)]
+                    return [product.NOMBRE_PREMIO, parseFloat(product.PROMEDIO).toFixed(2)]
                   });
                 }).catch( error => {
                     console.error(error);
-                }); 
+                });
+                
+            console.log(response);
 
             this.grafica1.valores = response;
            

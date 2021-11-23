@@ -112,7 +112,13 @@ class RestPremioController extends ResourceController
 
         $db = \Config\Database::connect();
         $query = "
-        
+        SELECT 
+            COUNT(ganadores.id) / ((CURDATE()+1) - STR_TO_DATE('2021-11-19', '%Y-%m-%d')) AS PROMEDIO,
+            premios.nombre_corto as NOMBRE_PREMIO
+        FROM ganadores 
+        RIGHT JOIN premios ON premios.id = ganadores.premio_id
+        GROUP BY 
+            premios.id
         
         ";
         $query= $db->query($query);
