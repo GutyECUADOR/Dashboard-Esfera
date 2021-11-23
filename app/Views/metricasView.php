@@ -81,7 +81,9 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
-                      <div class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">0</div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
+                      <div id="visitas_a_pagina" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
+                        
+                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
                     </div>
                     <div class="col-auto ps-0 mt-n4">
                       <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
@@ -98,7 +100,9 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
-                      <div class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">0</div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
+                      <div id="tiempo_permanencia" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
+                        0
+                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
                     </div>
                     <div class="col-auto ps-0 mt-n4">
                       <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
@@ -321,9 +325,64 @@
 
 
     <?= $this->section('js')?>
+      <!-- Load the JavaScript API client and Sign-in library. -->
+      <script src="https://apis.google.com/js/client:platform.js"></script>
       <script type="text/javascript" src="assets/js/libs/moment.locale.js?<?php echo date('Ymd')?>"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
       <script type="text/javascript" src="assets/js/pages/metricas.js?<?php echo date('Ymd')?>"></script>
+
+      <script>
+        // Replace with your view ID.
+        var VIEW_ID = '255918165';
+
+        // Query the API and print the results to the page.
+        function queryReports() {
+          gapi.client.request({
+            path: '/v4/reports:batchGet',
+            root: 'https://analyticsreporting.googleapis.com/',
+            method: 'POST',
+            body: {
+              reportRequests: [
+                {
+                  viewId: VIEW_ID,
+                  dateRanges: [
+                    {
+                      startDate: '2021-11-23',
+                      endDate: 'today'
+                    }
+                  ],
+                  metrics: [
+                    {
+                      expression: 'ga:sessions'
+                    },
+                    {
+                      expression: 'ga:users'
+                    },
+                    {
+                      expression: 'ga:newUsers'
+                    },
+                    {
+                      expression: 'ga:avgSessionDuration'
+                    }
+                  ]
+                }
+              ]
+            }
+          }).then(displayResults, console.error.bind(console));
+        }
+
+        function displayResults(response) {
+          let ga_sessions = response.result.reports[0].data.totals[0].values[0];
+          let ga_users = response.result.reports[0].data.totals[0].values[1];
+          let ga_newUsers = response.result.reports[0].data.totals[0].values[2];
+          let ga_avgSessionDuration = response.result.reports[0].data.totals[0].values[3];
+
+          document.querySelector('#visitas_a_pagina').innerHTML = ga_sessions;
+          document.querySelector('#tiempo_permanencia').innerHTML = moment.utc(parseInt(ga_avgSessionDuration)*1000).format('HH:mm:ss');;
+          console.log(response.result);
+        }
+      </script>
+
     <?= $this->endSection()?>
            
 <?= $this->endSection()?>

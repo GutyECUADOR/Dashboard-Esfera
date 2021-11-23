@@ -24,6 +24,11 @@
     <script src="assets/js/config.js"></script>
     <script src="vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
 
+    <!-- ===============================================-->
+    <!--    Google Analytics-->
+    <!-- ===============================================-->
+    <meta name="google-signin-client_id" content="9864280064-mp2jar0gln48p447drbu004vl4bc7jva.apps.googleusercontent.com">
+    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/analytics.readonly">  
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
