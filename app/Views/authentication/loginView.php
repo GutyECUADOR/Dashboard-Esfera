@@ -108,21 +108,21 @@
                           <div class="col-auto">
                             
                           </div>
-                          <div class="col-auto"><a class="fs--1" href="pages/authentication/card/forgot-password.html">Olvidó su contraseña?</a></div>
+                          <!-- <div class="col-auto"><a class="fs--1" href="pages/authentication/card/forgot-password.html">Olvidó su contraseña?</a></div> -->
                         </div>
                         <div class="mb-3">
                           <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Ingresar</button>
                         </div>
                       </form>
                       <!-- Login Form -->
-                      <div class="position-relative mt-4">
+                      <!-- <div class="position-relative mt-4">
                         <hr class="bg-300" />
                         <div class="divider-content-center">o ingresa con</div>
                       </div>
                       <div class="row g-2 mt-2">
                         <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> google</a></div>
                         <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> facebook</a></div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>

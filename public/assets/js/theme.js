@@ -10610,15 +10610,15 @@ var productShareDoughnutInit = function productShareDoughnutInit() {
 /* -------------------------------------------------------------------------- */
 
 
-/* docReady(detectorInit);
+docReady(detectorInit);
 docReady(handleNavbarVerticalCollapsed);
-docReady(totalOrderInit); */
+docReady(totalOrderInit);
 /* docReady(weeklySalesInit); */
 /* docReady(marketShareInit); */
 /* docReady(totalSalesInit); */
 /* docReady(topProductsInit); */
 
-/* docReady(navbarTopDropShadow);
+docReady(navbarTopDropShadow);
 docReady(tooltipInit);
 docReady(popoverInit);
 docReady(toastInit);
@@ -10692,5 +10692,5 @@ docReady(realTimeUsersChartInit);
 docReady(linePaymentChartInit);
 docReady(chartBubble);
 docReady(chartLine);
-docReady(treeviewInit); */
-//# sourceMappingURL=theme.js.map
+docReady(treeviewInit);
+
