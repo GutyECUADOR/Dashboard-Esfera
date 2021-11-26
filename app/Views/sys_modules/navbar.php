@@ -8,7 +8,7 @@
     
     <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
         <li class="nav-item">
-            <p class="g-signin2" data-onsuccess="queryReports"></p>
+            <p class="g-signin2 btn" data-onsuccess="queryReports"></p>
         </li>
 
         <li class="nav-item">

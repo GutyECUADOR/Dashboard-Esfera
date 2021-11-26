@@ -48,7 +48,8 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row">
                     <div class="col">
-                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPremiosEntregados }}</p><span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
+                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPremiosEntregados }}</p>
+                      <span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
                     </div>
                     <div class="col-auto ps-0">
                       <div class="echart-bar-weekly-sales h-100"></div>
@@ -82,12 +83,10 @@
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
                       <div id="visitas_a_pagina" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
-                        
-                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
+                        0
+                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>Desde: <?php echo date('Y-m-23')?></span>
                     </div>
-                    <div class="col-auto ps-0 mt-n4">
-                      <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -95,18 +94,16 @@
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
-                  <h6 class="mb-0 mt-2">Tiempo de permanencia</h6>
+                  <h6 class="mb-0 mt-2">Tiempo de permanencia promedio</h6>
                 </div>
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
                       <div id="tiempo_permanencia" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
                         0
-                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>0%</span>
+                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>Desde: <?php echo date('Y-m-23')?></span>
                     </div>
-                    <div class="col-auto ps-0 mt-n4">
-                      <div class="echart-default-total-order" data-echarts='{"tooltip":{"trigger":"axis","formatter":"{b0} : {c0}"},"xAxis":{"data":["Week 4","Week 5","week 6","week 7"]},"series":[{"type":"line","data":[20,40,100,120],"smooth":true,"lineStyle":{"width":3}}],"grid":{"bottom":"2%","top":"2%","right":"10px","left":"10px"}}' data-echart-responsive="true"></div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -256,10 +253,34 @@
             </div>
            
           </div>
+
+          <div class="row g-0">
+            <div class="col-lg-6 pe-lg-2 mb-3">
+              <div class="card h-lg-100 overflow-hidden">
+                <div class="card-header bg-light">
+                  <div class="row flex-between-center">
+                      <div class="col-auto">
+                        <h6 class="mb-0">Grupo de duración de visita (Segundos)</h6>
+                      </div>
+                  </div>
+                </div>
+               
+                <div class="card h-100">
+                  <div class="card-body h-100">
+                    <div class="echart-bar-chart-series-example" style="min-height: 300px;" data-echart-responsive="true"></div>
+                  </div>
+                </div>
+                  
+                
+              </div>
+            </div>
+
+          </div>
+
           <footer class="footer">
             <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-600">Thank you for creating with Falcon <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> 2021 &copy; <a href="https://themewagon.com">Themewagon</a></p>
+                <p class="mb-0 text-600">Copyright Sphera <?php echo date('Y-m-d'); ?> <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> 2021 &copy; <a href="#">Sphera</a></p>
               </div>
               <div class="col-12 col-sm-auto text-center">
                 <p class="mb-0 text-600">v3.5.0</p>
@@ -343,30 +364,54 @@
             method: 'POST',
             body: {
               reportRequests: [
-                {
-                  viewId: VIEW_ID,
-                  dateRanges: [
-                    {
-                      startDate: '2021-11-23',
-                      endDate: 'today'
-                    }
-                  ],
-                  metrics: [
-                    {
-                      expression: 'ga:sessions'
-                    },
-                    {
-                      expression: 'ga:users'
-                    },
-                    {
-                      expression: 'ga:newUsers'
-                    },
-                    {
-                      expression: 'ga:avgSessionDuration'
-                    }
-                  ]
-                }
-              ]
+                      {
+                        viewId: VIEW_ID,
+                        dateRanges: [
+                          {
+                            startDate: '2021-11-23',
+                            endDate: 'today'
+                          }
+                        ],
+                        metrics: [
+                          {
+                            expression: 'ga:sessions'
+                          },
+                          {
+                            expression: 'ga:users'
+                          },
+                          {
+                            expression: 'ga:newUsers'
+                          },
+                          {
+                            expression: 'ga:avgSessionDuration'
+                          }
+                        ]
+                      },
+                      {
+                        viewId: VIEW_ID,
+                        dateRanges: [
+                          {
+                            startDate: '2021-11-23',
+                            endDate: 'today'
+                          }
+                        ],
+                        metrics: [
+                          {
+                            expression: 'ga:pageviews'
+                          }
+                        ],
+                        dimensions: [
+                          {
+                            histogramBuckets: [
+                              NaN
+                            ],
+                            name: 'ga:sessionDurationBucket'
+                          }
+                        ]
+                      }
+                      
+                    
+                    ]
             }
           }).then(displayResults, console.error.bind(console));
         }
@@ -379,7 +424,171 @@
 
           document.querySelector('#visitas_a_pagina').innerHTML = ga_sessions;
           document.querySelector('#tiempo_permanencia').innerHTML = moment.utc(parseInt(ga_avgSessionDuration)*1000).format('HH:mm:ss');;
-          console.log(response.result);
+        
+          let report2_rows = response.result.reports[1].data.rows;
+         
+          let time_rows = report2_rows.map( row => {
+            return {
+              metrica: parseInt(row.dimensions[0]),
+              valor: parseInt(row.metrics[0].values[0])
+            }
+          },0);
+
+          console.log(time_rows);
+
+          const grupo1 = time_rows.filter( row => { 
+            return row.metrica >= 0 && row.metrica <= 10
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const grupo2 = time_rows.filter( row => { 
+            return row.metrica >= 11 && row.metrica <= 30
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const grupo3 = time_rows.filter( row => { 
+            return row.metrica >= 31 && row.metrica <= 60
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const grupo4 = time_rows.filter( row => { 
+            return row.metrica >= 61 && row.metrica <= 180
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const grupo5 = time_rows.filter( row => { 
+            return row.metrica >= 181 && row.metrica <= 600
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const grupo6 = time_rows.filter( row => { 
+            return row.metrica >= 601
+          }).reduce( (total, row) => {
+            return total + row.valor;
+          },0);
+
+          const metricas_tiempoPagina = [
+            {
+              title: '0-10 segundos',
+              valor: grupo1
+            },
+            {
+              title: '11-30 segundos',
+              valor: grupo2
+            },
+            {
+              title: '31-60 segundos',
+              valor: grupo3
+            },
+            {
+              title: '61-180 segundos',
+              valor: grupo4
+            },
+            {
+              title: '181-600 segundos',
+              valor: grupo5
+            },
+            {
+              title: '601-1800 segundos',
+              valor: grupo6
+            }
+          ]
+
+          const metricas_tiempoPagina_values = metricas_tiempoPagina.map ( row => row.valor)
+          console.log(metricas_tiempoPagina);
+
+          
+          var $barSeriesChartEl = document.querySelector('.echart-bar-chart-series-example');
+          if ($barSeriesChartEl) {
+            // Get options from data attribute
+            var userOptions = utils.getData($barSeriesChartEl, 'options');
+            var chart = window.echarts.init($barSeriesChartEl);
+
+            var getDefaultOptions = function getDefaultOptions() {
+              return {
+                color: [utils.getColor('primary'), utils.getColor('info')],
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                    type: 'shadow'
+                  },
+                  padding: [7, 10],
+                  backgroundColor: utils.getGrays()['100'],
+                  borderColor: utils.getGrays()['300'],
+                  textStyle: {
+                    color: utils.getColors().dark
+                  },
+                  borderWidth: 1,
+                  transitionDuration: 0
+                  
+                },
+                xAxis: {
+                  type: 'value',
+                  axisLabel: {
+                    formatter: function formatter(value) {
+                      return "".concat(value / 1000, "k");
+                    },
+                    color: utils.getGrays()['500']
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'solid'
+                    }
+                  },
+                  splitLine: {
+                    lineStyle: {
+                      type: 'dashed',
+                      color: utils.getGrays()['200']
+                    }
+                  }
+                },
+                yAxis: {
+                  type: 'category',
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'solid'
+                    }
+                  },
+                  axisLabel: {
+                    color: utils.getGrays()['500']
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  splitLine: {
+                    show: false
+                  },
+                  data: ['0-10', '11-30', '31-60', '61-180', '181-600', '601-1800']
+                },
+                series: [{
+                  name: 'tiempo',
+                  type: 'bar',
+                  data: metricas_tiempoPagina_values,
+                  itemStyle: {
+                    barBorderRadius: [0, 3, 3, 0]
+                  }
+                }],
+                grid: {
+                  right: 15,
+                  left: '12%',
+                  bottom: '10%',
+                  top: 5
+                }
+              };
+            };
+
+            echartSetOption(chart, userOptions, getDefaultOptions);
+          }
+
         }
       </script>
 
