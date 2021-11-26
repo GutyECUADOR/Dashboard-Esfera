@@ -59,16 +59,18 @@
               </div>
             </div>
             <div class="col-md-6 col-xxl-3">
-              <div class="card h-md-100">
-                <div class="card-body">
-                  <div class="row h-100 justify-content-between g-0">
-                    <div class="col-5 col-sm-6 col-xxl pe-2">
-                      <h6 class="mt-1">Promedio de premios entregados por dia</h6>
-                      
+              <div class="card h-md-100 ecommerce-card-min-width">
+                <div class="card-header pb-0">
+                  <h6 class="mb-0 mt-2 d-flex align-items-center">Promedio de premios entregados por dia<span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Calculated according to last week's sales"><span class="far fa-question-circle" data-fa-transform="shrink-1"></span></span></h6>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-end">
+                  <div class="row">
+                    <div class="col">
+                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{ promedioPremiosEntregadosByDia }}</p>
+                      <span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
                     </div>
-                    <div class="col-auto position-relative">
-                      <div class="echart-market-share"></div>
-                      <div class="position-absolute top-50 start-50 translate-middle text-dark fs-2">{{ promedioPremiosEntregadosByDia }}</div>
+                    <div class="col-auto ps-0">
+                      <div class="echart-bar-weekly-sales h-100"></div>
                     </div>
                   </div>
                 </div>
