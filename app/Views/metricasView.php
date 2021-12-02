@@ -45,8 +45,7 @@
           <div class="row g-3 mb-3">
             <div class="text-center">
               <p class="h3 mb-0">TABLERO DE CONTROL DESTAPA TU SUERTE</p>
-                <img class="me-2" src="https://destapatusuerte.com/assets/img/logo.png" alt="" width="60" style="margin-left: 0.5rem;"/>
-            
+                
             </div>
           </div>
           
