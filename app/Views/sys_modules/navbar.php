@@ -9,7 +9,7 @@
     
     <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
         
-        <p class="g-signin2 d-none" data-onsuccess="queryReports"></p>
+        <p style="display: none" class="g-signin2 d-none" data-onsuccess="queryReports"></p>
         
 
         <li class="nav-item">

@@ -181,7 +181,7 @@ const app = new Vue({
           this.grafica2.serie = serie;
           this.grafica2.categorias = categorias;
 
-          let dom = document.querySelector('.echart-line-total-sales');
+          let dom = document.querySelector('.echart-line-premios-canjeados-dia');
          
           if (dom) {
             let chart = echarts.init(dom);

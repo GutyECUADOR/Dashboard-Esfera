@@ -160,50 +160,42 @@
           </div>
           <div class="row g-0">
             <div class="col-lg-6 pe-lg-2 mb-3">
-              <div class="card h-lg-100 overflow-hidden">
+              <div class="card h-lg-100">
                 <div class="card-header bg-light">
                   <div class="row flex-between-center">
                       <div class="col-auto">
-                        <h6 class="mb-0">Grupo de duración de visita (Segundos)</h6>
+                        <h6 class="mb-0">Visitas a la página por dia</h6>
                       </div>
-                  </div>
+                      <!-- <div class="col-auto d-flex w-100">
+                        <input type="date" class="form-control form-control-sm me-2">
+                        <input type="date" class="form-control form-control-sm">
+                      
+                      </div> -->
+                    </div>
                 </div>
                
-                <div class="card h-100">
-                  <div class="card-body h-100">
-                    <div class="echart-bar-chart-series-example" style="min-height: 300px;" data-echart-responsive="true"></div>
-                  </div>
+                <div class="card-body h-100 pe-0">
+                  <div id="echart-line-total-views-por-dia" class="echart-line-total-views-por-dia h-100" data-echart-responsive="true"></div>
                 </div>
                   
                 
               </div>
             </div>
             <div class="col-lg-6 ps-lg-2 mb-3">
-              <div class="card h-lg-100">
+              <div class="card h-lg-100 overflow-hidden">
                 <div class="card-header bg-light">
                   <div class="row flex-between-center">
                     <div class="col-auto">
-                      <h6 class="mb-0">Premios canjeados por dia</h6>
-                    </div>
-                    <div class="col-auto d-flex w-100">
-                      <input type="date" v-model="grafica2.fechaINI" @change="grafica2_getPremiosByDia" class="form-control form-control-sm me-2">
-                      <input type="date" v-model="grafica2.fechaFIN" @change="grafica2_getPremiosByDia" class="form-control form-control-sm">
-                     
-                      <div class="dropdown font-sans-serif btn-reveal-trigger">
-                        <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
-                          <a class="dropdown-item" @click="grafica2_getPremiosByDia">Recargar</a>
-                          <a class="dropdown-item" href="#!">Exportar Informe</a>
-                        </div>
-                      </div>
+                      <h6 class="mb-0">Grupo de duración de visita (Segundos)</h6>
                     </div>
                   </div>
                 </div>
-                <div class="card-body h-100 pe-0">
-                  <!-- Find the JS file for the following chart at: src\js\charts\echarts\total-sales.js-->
-                  <!-- If you are not using gulp based workflow, you can find the transpiled code at: public\assets\js\theme.js-->
-                  <div class="echart-line-total-sales h-100" data-echart-responsive="true"></div>
+                <div class="card h-100">
+                  <div class="card-body h-100">
+                    <div class="echart-bar-chart-series-example" style="min-height: 300px;" data-echart-responsive="true"></div>
+                  </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -319,6 +311,35 @@
                 </div>
                   
                 
+              </div>
+            </div>
+
+            <div class="col-lg-6 pe-lg-2 mb-3">
+              <div class="card h-lg-100">
+                <div class="card-header bg-light">
+                  <div class="row flex-between-center">
+                    <div class="col-auto">
+                      <h6 class="mb-0">Premios canjeados por dia</h6>
+                    </div>
+                    <div class="col-auto d-flex w-100">
+                      <input type="date" v-model="grafica2.fechaINI" @change="grafica2_getPremiosByDia" class="form-control form-control-sm me-2">
+                      <input type="date" v-model="grafica2.fechaFIN" @change="grafica2_getPremiosByDia" class="form-control form-control-sm">
+                    
+                      <div class="dropdown font-sans-serif btn-reveal-trigger">
+                        <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales">
+                          <a class="dropdown-item" @click="grafica2_getPremiosByDia">Recargar</a>
+                          <a class="dropdown-item" href="#!">Exportar Informe</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body h-100 pe-0">
+                  <!-- Find the JS file for the following chart at: src\js\charts\echarts\total-sales.js-->
+                  <!-- If you are not using gulp based workflow, you can find the transpiled code at: public\assets\js\theme.js-->
+                  <div class="echart-line-premios-canjeados-dia h-100" data-echart-responsive="true"></div>
+                </div>
               </div>
             </div>
 
@@ -599,9 +620,130 @@
 
 
         function displayVisitantesporDia (response) {
-          let ga_sessions = response.result.reports[0].data.totals[0].values[0];
-          let ga_users = response.result.reports[0].data.totals[0].values[1];
-         
+          
+          let rows_visitas = response.result.reports[2].data.rows.map( row =>{
+            let date = moment(row.dimensions[0], 'YYYYMMDD').format('YYYY-MM-DD');
+            return {
+              metrica: date,
+              valor: row.metrics[0].values[0]
+            }
+          });
+
+          let categorias = rows_visitas.map( (row) => {
+              return row.metrica;
+          });
+
+          let data = rows_visitas.map( (row) => {
+              return parseInt(row.valor);
+          });
+          
+
+          console.log('Visitas por dia:', rows_visitas);
+
+          let $lineChartEl = document.querySelector('#echart-line-total-views-por-dia');
+          if ($lineChartEl) {
+            // Get options from data attribute
+            let userOptions = utils.getData($lineChartEl, 'options');
+            let chart = window.echarts.init($lineChartEl);
+            
+            let _tooltipFormatter2 = function _tooltipFormatter2(params) {
+              return "\n      <div>\n          <h6 class=\"fs--1 text-700 mb-0\">\n            <span class=\"fas fa-circle me-1\" style='color:".concat(params[0].borderColor, "'></span>\n            ").concat(params[0].name, " : ").concat(params[0].value, "\n          </h6>\n      </div>\n      ");
+            };
+
+            let getDefaultOptions = function getDefaultOptions() {
+              return {
+                tooltip: {
+                  trigger: 'axis',
+                  padding: [7, 10],
+                  backgroundColor: utils.getGrays()['100'],
+                  borderColor: utils.getGrays()['300'],
+                  textStyle: {
+                    color: utils.getColors().dark
+                  },
+                  borderWidth: 1,
+                  formatter: _tooltipFormatter2,
+                  transitionDuration: 0,
+                  position: function position(pos, params, dom, rect, size) {
+                    return getPosition(pos, params, dom, rect, size);
+                  },
+                  axisPointer: {
+                    type: 'none'
+                  }
+                },
+                xAxis: {
+                  type: 'category',
+                  data: categorias,
+                  boundaryGap: false,
+                  axisLine: {
+                    lineStyle: {
+                      color: utils.getGrays()['300']
+                    }
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  axisLabel: {
+                    color: utils.getGrays()['400'],
+                    formatter: function formatter(value) {
+                      return value;
+                    },
+                    margin: 15
+                  },
+                  splitLine: {
+                    show: false
+                  }
+                },
+                yAxis: {
+                  type: 'value',
+                  splitLine: {
+                    lineStyle: {
+                      type: 'dashed',
+                      color: utils.getGrays()['200']
+                    }
+                  },
+                  boundaryGap: false,
+                  axisLabel: {
+                    show: true,
+                    color: utils.getGrays()['400'],
+                    margin: 15
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  axisLine: {
+                    show: false
+                  },
+                  min: 0
+                },
+                series: [{
+                  type: 'line',
+                  data: data,
+                  itemStyle: {
+                    color: utils.getGrays().white,
+                    borderColor: utils.getColor('primary'),
+                    borderWidth: 2
+                  },
+                  lineStyle: {
+                    color: utils.getColor('primary')
+                  },
+                  showSymbol: false,
+                  symbol: 'circle',
+                  symbolSize: 10,
+                  smooth: false,
+                  hoverAnimation: true
+                }],
+                grid: {
+                  right: '3%',
+                  left: '10%',
+                  bottom: '10%',
+                  top: '5%'
+                }
+              };
+            };
+
+            echartSetOption(chart, userOptions, getDefaultOptions);
+          }
+
         }
 
         
