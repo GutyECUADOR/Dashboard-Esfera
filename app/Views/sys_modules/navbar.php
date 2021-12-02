@@ -1,13 +1,9 @@
 <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
-    <div class="">
-       <span class="h3 mb-0">TABLERO DE CONTROL DESTAPA TU SUERTE</span>
-        <img class="me-2" src="https://destapatusuerte.com/assets/img/logo.png" alt="" width="60" style="margin-left: 0.5rem;"/>
-     
-    </div>
+    
     
     <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
     <a class="navbar-brand me-1 me-sm-3">
-        <div class="d-flex align-items-center"><img class="me-2" src="assets/img/icons/spot-illustrations/falcon.png" alt="" width="40" /><span class="font-sans-serif"></span>
+        <div class="d-flex align-items-center"><img class="me-2" src="assets/img/icons/spot-illustrations/sphera.png" alt="" width="40" /><span class="font-sans-serif"></span>
         </div>
     </a>
     

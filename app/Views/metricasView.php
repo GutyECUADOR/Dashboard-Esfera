@@ -23,11 +23,13 @@
           </script>
           <div class="d-flex align-items-center">
             <div class="toggle-icon-wrapper">
-
+            
               <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
            
-            </div><a class="navbar-brand">
-              <div class="d-flex align-items-center py-3"><img class="me-2" src="assets/img/icons/spot-illustrations/sphera.png" alt="" width="95px" /><span class="font-sans-serif"></span>
+            </div>
+            <a class="navbar-brand">
+              <div class="d-flex align-items-center py-3">
+                <img class="me-2" src="assets/img/icons/spot-illustrations/sphera.png" alt="" width="95px" /><span class="font-sans-serif"></span>
               </div>
             </a>
           </div>
@@ -39,6 +41,16 @@
           <!-- Navbar Vertical -->
           <?= $this->include('sys_modules/navbar')?>
           <!-- Navbar Vertical -->
+
+          <div class="row g-3 mb-3">
+            <div class="text-center">
+              <p class="h3 mb-0">TABLERO DE CONTROL DESTAPA TU SUERTE</p>
+                <img class="me-2" src="https://destapatusuerte.com/assets/img/logo.png" alt="" width="60" style="margin-left: 0.5rem;"/>
+            
+            </div>
+          </div>
+          
+
           <div class="row g-3 mb-3">
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100 ecommerce-card-min-width">
@@ -111,7 +123,24 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-xxl-3">
+            <div class="col-md-6 col-xxl-6">
+              <div class="card h-md-100">
+                <div class="card-header pb-0">
+                  <h6 class="mb-0 mt-2">Tiempo de permanencia promedio</h6>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-end">
+                  <div class="row justify-content-between">
+                    <div class="col-auto align-self-end">
+                      <div id="tiempo_permanencia" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
+                        0
+                      </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>Desde: <?php echo date('Y-m-23')?></span>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xxl-6">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
                   <h6 class="mb-0 mt-2">Tiempo de permanencia promedio</h6>
@@ -203,7 +232,7 @@
                
                 <div class="card h-100">
                   <div class="card-body h-100">
-                    <div class="echart-bar-timeline-chart-example" style="min-height: 450px;" data-echart-responsive="true"></div>
+                    <div class="echart-bar-timeline-premios-entregados" style="min-height: 450px;" data-echart-responsive="true"></div>
                   </div>
                 </div>
                   
@@ -298,7 +327,7 @@
           <footer class="footer">
             <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-600">Copyright Sphera <?php echo date('Y-m-d'); ?> <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> 2021 &copy; <a href="#">Sphera</a></p>
+                <p class="mb-0 text-600">Copyright Sphera 2021 <span class="d-none d-sm-inline-block"> - </span><br class="d-sm-none" /> <?php echo date('Y'); ?> &copy; <a href="#">Sphera</a></p>
               </div>
               <div class="col-12 col-sm-auto text-center">
                 <p class="mb-0 text-600">v3.5.0</p>

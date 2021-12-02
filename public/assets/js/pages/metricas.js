@@ -15,7 +15,7 @@ const app = new Vue({
           serie: []
         },
         grafica3: {
-          fechaINI : moment().format("YYYY-MM-19"),
+          fechaINI : moment().format("YYYY-MM-01"),
           fechaFIN : moment().format("YYYY-MM-DD")
         },
         grafica5: {
@@ -371,7 +371,7 @@ const app = new Vue({
 
           console.log(data_betplay);
 
-          let $barTimelineChartEl = document.querySelector('.echart-bar-timeline-chart-example');
+          let $barTimelineChartEl = document.querySelector('.echart-bar-timeline-premios-entregados');
 
           if ($barTimelineChartEl) {
             // Get options from data attribute
