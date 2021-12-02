@@ -142,13 +142,13 @@
             <div class="col-md-6 col-xxl-6">
               <div class="card h-md-100">
                 <div class="card-header pb-0">
-                  <h6 class="mb-0 mt-2">Tiempo de permanencia promedio</h6>
+                  <h6 class="mb-0 mt-2">Porcentaje de inscritos con respecto a visitantes</h6>
                 </div>
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
                       <div id="tiempo_permanencia" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
-                        0
+                        0 %
                       </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>Desde: <?php echo date('Y-m-23')?></span>
                     </div>
                     
