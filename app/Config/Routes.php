@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'LoginController::index');
 $routes->get('login', 'LoginController::index', ['filter' => 'noAuth']);
+$routes->get('loginAnalytics', 'LoginController::loginAnalytics');
 $routes->get('logout', 'LoginController::logout');
 
 $routes->group('dashboard', ['filter' => 'auth'], function ($routes) {

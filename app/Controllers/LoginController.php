@@ -17,6 +17,11 @@ class LoginController extends BaseController {
         return view('authentication/loginView');
 	}
 
+    public function loginAnalytics() {
+        helper('form');
+        return view('authentication/loginAnalyticsView');
+	}
+
 	public function checklogin() {
         $usuario = strtoupper($this->request->getPost('email'));
         $password = $this->request->getPost('password');
@@ -36,7 +41,7 @@ class LoginController extends BaseController {
                
                 $session = session();
                 $session->set($session_data);
-                return redirect()->to(base_url('/dashboard'));	
+                return redirect()->to(base_url('/loginAnalytics'));	
             } else {
 				return  redirect()
                             ->to(base_url('/login'))
