@@ -25,9 +25,9 @@
             <div class="toggle-icon-wrapper">
 
               <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-
+           
             </div><a class="navbar-brand">
-              <div class="d-flex align-items-center py-3"><img class="me-2" src="assets/img/icons/spot-illustrations/falcon.png" alt="" width="40" /><span class="font-sans-serif">Sphera</span>
+              <div class="d-flex align-items-center py-3"><img class="me-2" src="assets/img/icons/spot-illustrations/sphera.png" alt="" width="95px" /><span class="font-sans-serif"></span>
               </div>
             </a>
           </div>
@@ -40,6 +40,24 @@
           <?= $this->include('sys_modules/navbar')?>
           <!-- Navbar Vertical -->
           <div class="row g-3 mb-3">
+            <div class="col-md-6 col-xxl-3">
+              <div class="card h-md-100 ecommerce-card-min-width">
+                <div class="card-header pb-0">
+                  <h6 class="mb-0 mt-2 d-flex align-items-center">Personas registradas a la fecha<span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Calculated according to last week's sales"><span class="far fa-question-circle" data-fa-transform="shrink-1"></span></span></h6>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-end">
+                  <div class="row">
+                    <div class="col">
+                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPersonasRegistradas }}</p>
+                      <span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
+                    </div>
+                    <div class="col-auto ps-0">
+                      <div class="echart-bar-weekly-sales h-100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="col-md-6 col-xxl-3">
               <div class="card h-md-100 ecommerce-card-min-width">
                 <div class="card-header pb-0">
@@ -303,7 +321,7 @@
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
       <script type="text/javascript" src="assets/js/pages/metricas.js?<?php echo date('Ymd')?>"></script>
 
-      <script>
+       <script>
         // Replace with your view ID.
         var VIEW_ID = '255918165';
 
@@ -325,7 +343,7 @@
                         ],
                         metrics: [
                           {
-                            expression: 'ga:sessions'
+                            expression: 'ga:pageviews'
                           },
                           {
                             expression: 'ga:users'
@@ -359,12 +377,30 @@
                             name: 'ga:sessionDurationBucket'
                           }
                         ]
+                      },
+                      {
+                        viewId: VIEW_ID,
+                        dateRanges: [
+                          {
+                            startDate: '2021-11-23',
+                            endDate: 'today'
+                          }
+                        ],
+                        metrics: [
+                          {
+                            expression:'ga:pageviews'
+                          }
+                        ],
+                        dimensions:[{"histogramBuckets":[null],
+                         name: 'ga:date'
+                        }]
                       }
-                      
-                    
                     ]
             }
-          }).then(displayResults, console.error.bind(console));
+          }).then( (response) => {
+            displayResults(response);
+            displayVisitantesporDia(response);
+          }, console.error.bind(console));
         }
 
         function displayResults(response) {
@@ -385,39 +421,33 @@
             }
           },0);
 
-          console.log(time_rows);
+          //console.log(time_rows);
 
           const grupo1 = time_rows.filter( row => { 
-            return row.metrica >= 0 && row.metrica <= 10
+            return row.metrica >= 0 && row.metrica <= 30
           }).reduce( (total, row) => {
             return total + row.valor;
           },0);
 
           const grupo2 = time_rows.filter( row => { 
-            return row.metrica >= 11 && row.metrica <= 30
-          }).reduce( (total, row) => {
-            return total + row.valor;
-          },0);
-
-          const grupo3 = time_rows.filter( row => { 
             return row.metrica >= 31 && row.metrica <= 60
           }).reduce( (total, row) => {
             return total + row.valor;
           },0);
 
-          const grupo4 = time_rows.filter( row => { 
+          const grupo3 = time_rows.filter( row => { 
             return row.metrica >= 61 && row.metrica <= 180
           }).reduce( (total, row) => {
             return total + row.valor;
           },0);
 
-          const grupo5 = time_rows.filter( row => { 
+          const grupo4 = time_rows.filter( row => { 
             return row.metrica >= 181 && row.metrica <= 600
           }).reduce( (total, row) => {
             return total + row.valor;
           },0);
 
-          const grupo6 = time_rows.filter( row => { 
+          const grupo5 = time_rows.filter( row => { 
             return row.metrica >= 601
           }).reduce( (total, row) => {
             return total + row.valor;
@@ -425,33 +455,29 @@
 
           const metricas_tiempoPagina = [
             {
-              title: '0-10 segundos',
+              title: '0-30 segundos',
               valor: grupo1
             },
             {
-              title: '11-30 segundos',
+              title: '31-60 segundos',
               valor: grupo2
             },
             {
-              title: '31-60 segundos',
+              title: '61-180 segundos',
               valor: grupo3
             },
             {
-              title: '61-180 segundos',
+              title: '181-600 segundos',
               valor: grupo4
             },
             {
-              title: '181-600 segundos',
-              valor: grupo5
-            },
-            {
               title: '601-1800 segundos',
-              valor: grupo6
+              valor: grupo5
             }
           ]
 
           const metricas_tiempoPagina_values = metricas_tiempoPagina.map ( row => row.valor)
-          console.log(metricas_tiempoPagina);
+          //console.log(metricas_tiempoPagina);
 
           
           var $barSeriesChartEl = document.querySelector('.echart-bar-chart-series-example');
@@ -518,7 +544,7 @@
                   splitLine: {
                     show: false
                   },
-                  data: ['0-10', '11-30', '31-60', '61-180', '181-600', '601-1800']
+                  data: ['0-30', '31-60', '61-180', '181-600', '601-1800']
                 },
                 series: [{
                   name: 'tiempo',
@@ -541,8 +567,18 @@
           }
 
         }
-      </script>
 
+
+        function displayVisitantesporDia (response) {
+          let ga_sessions = response.result.reports[0].data.totals[0].values[0];
+          let ga_users = response.result.reports[0].data.totals[0].values[1];
+         
+        }
+
+        
+
+      </script>
+      
     <?= $this->endSection()?>
            
 <?= $this->endSection()?>

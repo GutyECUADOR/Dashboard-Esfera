@@ -3,6 +3,7 @@ const app = new Vue({
     data: {
         title: 'Dashboard',
         totalPremiosEntregados: 0,
+        totalPersonasRegistradas: 0,
         promedioPremiosEntregadosByDia: 0,
         grafica1: {
           valores : []
@@ -35,6 +36,7 @@ const app = new Vue({
           console.log(response);
                       
           this.totalPremiosEntregados = response.totalPremiosEntregados.total;
+          this.totalPersonasRegistradas = response.totalPersonasRegistradas.total;
           this.promedioPremiosEntregadosByDia = parseFloat(response.promedioPremiosEntregadosByDia.promedio).toFixed(2);
           
         },

@@ -22,6 +22,12 @@ class RestPremioController extends ResourceController
         ";
         $query= $db->query($query);
         $totalPremiosEntregados = $query->getRow();    
+        
+        $query = "
+            SELECT COUNT(*) as total FROM ganadores WHERE DNI != ''
+        ";
+        $query= $db->query($query);
+        $totalPersonasRegistradas = $query->getRow();    
 
         $query = "
             SELECT 
@@ -35,6 +41,7 @@ class RestPremioController extends ResourceController
         
         $response = array(
             'totalPremiosEntregados' => $totalPremiosEntregados,
+            'totalPersonasRegistradas' => $totalPersonasRegistradas,
             'promedioPremiosEntregadosByDia' => $promedioPremiosEntregadosByDia,
         );
         
@@ -131,9 +138,10 @@ class RestPremioController extends ResourceController
         $db = \Config\Database::connect();
         $query = "
             SELECT 
-                COUNT(ganadores.id) AS TOTAL_ENTREGADOS,
+            COUNT(ganadores.id) AS TOTAL_ENTREGADOS,
                 457431  - COUNT(ganadores.id) AS TOTAL_PENDIENTES
             FROM ganadores 
+            WHERE ganadores.id != 0 AND ganadores.dni != ''
    
         ";
         $query= $db->query($query);
