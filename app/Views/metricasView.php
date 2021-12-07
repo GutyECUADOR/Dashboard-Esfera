@@ -344,6 +344,27 @@
 
           </div>
 
+          <div class="row g-0">
+            <div class="col-lg-6 ps-lg-2 mb-3">
+              <div class="card h-lg-100 overflow-hidden">
+                <div class="card-header bg-light">
+                  <div class="row flex-between-center">
+                    <div class="col-auto">
+                      <h6 class="mb-0">Visitas por fuente de visita</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="card h-100">
+                  <div class="card-body h-100">
+                    <div class="echart-bar-chart-visitas-fuente" style="min-height: 300px;" data-echart-responsive="true"></div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        
           <footer class="footer">
             <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
               <div class="col-12 col-sm-auto text-center">
@@ -443,12 +464,31 @@
                         dimensions:[{"histogramBuckets":[null],
                          name: 'ga:date'
                         }]
+                      },
+                      {
+                        viewId: VIEW_ID,
+                        dateRanges: [
+                          {
+                            startDate: '2021-11-23',
+                            endDate: 'today'
+                          }
+                        ],
+                        metrics: [
+                          {
+                            expression:'ga:pageviews'
+                          }
+                        ],
+                        dimensions:[
+                          {"histogramBuckets":[null],
+                          name: 'ga:source'
+                        }]
                       }
                     ]
             }
           }).then( (response) => {
             displayResults(response);
             displayVisitantesporDia(response);
+            displayVisitasPorFuente(response);
           }, console.error.bind(console));
         }
 
@@ -466,7 +506,7 @@
           let visitasPagina = ga_sessions || 0;
           let porcentaje_inscritos = parseInt(personasRegistradas) * 100 / parseInt(visitasPagina);
           console.log(personasRegistradas, ga_sessions);
-          document.querySelector('#porcentaje_inscritos').innerHTML = porcentaje_inscritos.toFixed(4) + '%';
+          document.querySelector('#porcentaje_inscritos').innerHTML = porcentaje_inscritos.toFixed(2) + '%';
        
           let report2_rows = response.result.reports[1].data.rows;
          
@@ -533,10 +573,10 @@
           ]
 
           const metricas_tiempoPagina_values = metricas_tiempoPagina.map ( row => row.valor)
-          //console.log(metricas_tiempoPagina);
+          console.log('Tiempo de permanencia en segundos:',metricas_tiempoPagina);
 
           
-          var $barSeriesChartEl = document.querySelector('.echart-bar-chart-series-example');
+          let $barSeriesChartEl = document.querySelector('.echart-bar-chart-series-example');
           if ($barSeriesChartEl) {
             // Get options from data attribute
             var userOptions = utils.getData($barSeriesChartEl, 'options');
@@ -743,6 +783,113 @@
                   left: '10%',
                   bottom: '10%',
                   top: '5%'
+                }
+              };
+            };
+
+            echartSetOption(chart, userOptions, getDefaultOptions);
+          }
+
+        }
+
+        function displayVisitasPorFuente(response){
+          console.log(response.result);
+          let rows_visitas_by_source = response.result.reports[3].data.rows.map( row =>{
+            return {
+              title: row.dimensions[0],
+              valor: parseInt(row.metrics[0].values[0])
+            }
+          });
+
+          let categorias = rows_visitas_by_source.map( (row) => {
+              return row.title;
+          });
+
+          let data = rows_visitas_by_source.map( (row) => {
+              return parseInt(row.valor);
+          });
+
+          console.log('Visitas por fuente de visita:', rows_visitas_by_source);
+
+          let $barSeriesChartEl = document.querySelector('.echart-bar-chart-visitas-fuente');
+          if ($barSeriesChartEl) {
+            // Get options from data attribute
+            var userOptions = utils.getData($barSeriesChartEl, 'options');
+            var chart = window.echarts.init($barSeriesChartEl);
+
+            var getDefaultOptions = function getDefaultOptions() {
+              return {
+                color: [utils.getColor('primary'), utils.getColor('info')],
+                tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                    type: 'shadow'
+                  },
+                  padding: [7, 10],
+                  backgroundColor: utils.getGrays()['100'],
+                  borderColor: utils.getGrays()['300'],
+                  textStyle: {
+                    color: utils.getColors().dark
+                  },
+                  borderWidth: 1,
+                  transitionDuration: 0
+                  
+                },
+                xAxis: {
+                  type: 'value',
+                  axisLabel: {
+                    formatter: function formatter(value) {
+                      return "".concat(value / 1000, "k");
+                    },
+                    color: utils.getGrays()['500']
+                  },
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'solid'
+                    }
+                  },
+                  splitLine: {
+                    lineStyle: {
+                      type: 'dashed',
+                      color: utils.getGrays()['200']
+                    }
+                  }
+                },
+                yAxis: {
+                  type: 'category',
+                  axisLine: {
+                    show: true,
+                    lineStyle: {
+                      color: utils.getGrays()['300'],
+                      type: 'solid'
+                    }
+                  },
+                  axisLabel: {
+                    color: utils.getGrays()['500']
+                  },
+                  axisTick: {
+                    show: false
+                  },
+                  splitLine: {
+                    show: false
+                  },
+                  data: categorias
+                },
+                series: [{
+                  name: 'Visitas',
+                  type: 'bar',
+                  data: data,
+                  itemStyle: {
+                    barBorderRadius: [0, 3, 3, 0]
+                  }
+                }],
+                grid: {
+                  right: 15,
+                  left: '35%',
+                  bottom: '10%',
+                  top: 5
                 }
               };
             };
