@@ -59,7 +59,7 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row">
                     <div class="col">
-                      <p class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPersonasRegistradas }}</p>
+                      <p id="p_totalPersonasRegistradas" class="font-sans-serif lh-1 mb-1 fs-4">{{  totalPersonasRegistradas }}</p>
                       <span class="badge badge-soft-success rounded-pill fs--2"><?php echo date('Y-m-d')?></span>
                     </div>
                     <div class="col-auto ps-0">
@@ -147,7 +147,7 @@
                 <div class="card-body d-flex flex-column justify-content-end">
                   <div class="row justify-content-between">
                     <div class="col-auto align-self-end">
-                      <div id="tiempo_permanencia" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
+                      <div id="porcentaje_inscritos" class="fs-4 fw-normal font-sans-serif text-700 lh-1 mb-1">
                         0 %
                       </div><span class="badge rounded-pill fs--2 bg-200 text-primary"><span class="fas fa-caret-up me-1"></span>Desde: <?php echo date('Y-m-23')?></span>
                     </div>
@@ -459,8 +459,15 @@
           let ga_avgSessionDuration = response.result.reports[0].data.totals[0].values[3];
 
           document.querySelector('#visitas_a_pagina').innerHTML = ga_sessions;
-          document.querySelector('#tiempo_permanencia').innerHTML = moment.utc(parseInt(ga_avgSessionDuration)*1000).format('HH:mm:ss');;
+          document.querySelector('#tiempo_permanencia').innerHTML = moment.utc(parseInt(ga_avgSessionDuration)*1000).format('HH:mm:ss');
         
+          // Porcentaje de inscritos
+          let personasRegistradas = document.querySelector('#p_totalPersonasRegistradas').innerHTML || 0;
+          let visitasPagina = ga_sessions || 0;
+          let porcentaje_inscritos = parseInt(personasRegistradas) * 100 / parseInt(visitasPagina);
+          console.log(personasRegistradas, ga_sessions);
+          document.querySelector('#porcentaje_inscritos').innerHTML = porcentaje_inscritos.toFixed(4) + '%';
+       
           let report2_rows = response.result.reports[1].data.rows;
          
           let time_rows = report2_rows.map( row => {

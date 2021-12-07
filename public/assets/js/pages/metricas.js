@@ -38,7 +38,7 @@ const app = new Vue({
           this.totalPremiosEntregados = response.totalPremiosEntregados.total;
           this.totalPersonasRegistradas = response.totalPersonasRegistradas.total;
           this.promedioPremiosEntregadosByDia = parseFloat(response.promedioPremiosEntregadosByDia.promedio).toFixed(2);
-          
+         
         },
         async grafica1_getPromedioPremiosByPremio() {
            
@@ -921,6 +921,7 @@ const app = new Vue({
               break;
           }
         }
+        
         
     },
     mounted(){
